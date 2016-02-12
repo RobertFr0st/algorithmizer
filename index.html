@@ -2,12 +2,27 @@
 <html>
 <head>
   <!-- bootstrap-->
+
+  <!--added JavaScript library-->
+  <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
    <script>
       function func() {
          alert("who r u")
       }
    </script>
+
+<!-- Page style and color characteristics-->
+   <style>
+
+	body { background-color:PeachPuff;}
+	 h1  { color: Coral; 
+		   font-family: Georgia; 
+		   font-size:350%;
+			}
+	
+   </style>
 </head>
 <body>
    <div class="container-fluid">
@@ -15,9 +30,12 @@
          <p><button onclick="func()">click me?</button></p>
      </div>
        <div class="row col-md-offset-4 col-md-4 " >
-         <h1>Hello World</h1>
+         <h1>ALGORITHMIZER </h1>
        </div>
    </div>
-   <script src=https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.14/d3.js></script>
+
+   <svg width="50" height="50">
+     <circle cx="25" cy="25" r="25" fill="purple" />
+   </svg>
 </body>
 </html>
