@@ -1,46 +1,36 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-  <!-- bootstrap-->
+  <head>
+    <!-- bootstrap-->
 
-  <!--added JavaScript library-->
-  <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!--added JavaScript library-->
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" type = "text/css" href="custom_styling.css">
-</head>
-<body>
+    <!-- bootstrap link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- custom css file link-->
+    <link rel="stylesheet" type = "text/css" href="custom_styling.css">
+  </head>
+  <body>
    <div class="container-fluid">
-       <div class="row col-md-offset-4 col-md-4 " >
+       <div class="row col-md-offset-4 col-md-4 " ><!-- bootstrap row-->
          <h1>ALGORITHMIZER </h1>
        </div>
-       <div class="row col-md-offset-4 col-md-4 " >
-        <p class= "one">
-			<button class="button button1" onclick="myMove()"><b> click</b></button>
-		</p>
+       <div class="row col-md-offset-4 col-md-4 " ><!-- bootstrap row-->
+         <p class= "one">
+           <button class="button button1" onclick="myMove()"><b> click</b></button>
+         </p>
       </div>
+      <div class="row col-md-offset-4 col-md-4 " ><!-- bootstrap row-->
 	  <div id ="container">
-	  <div id ="animate"></div>
+	    <div id ="animate"></div>
 	  </div>
+    </div>
+   </div><!-- end of fluid container bootstrap -->
 
-	  <script>
-	  function myMove() {
-		    var elem = document.getElementById("animate");   
-			var pos = 0;
-			var id = setInterval(frame, 5);
-			function frame() {
-				if (pos == 150) {
-					clearInterval(id);
-				} else {
-					pos++; 
-					elem.style.top = 'px'; 
-				    elem.style.left = pos +'px';
-			 }
-			} 
-	  }
-	  </script>
+  </body>
 
-   </div>
-
-</body>
+  <!-- throw your scripts back here -->
+  <script src="slider.js"></script>
 </html>
