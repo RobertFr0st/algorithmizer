@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
-<html>
-  <head>
+<head>
     <!-- bootstrap-->
 
     <!--added JavaScript library-->
@@ -10,27 +9,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <!-- custom css file link-->
-    <link rel="stylesheet" type = "text/css" href="custom_styling.css">
-  </head>
-  <body>
-   <div class="container-fluid">
-       <div class="row col-md-offset-4 col-md-4 " ><!-- bootstrap row-->
-         <h1>ALGORITHMIZER </h1>
-       </div>
-       <div class="row col-md-offset-4 col-md-4 " ><!-- bootstrap row-->
-         <p class= "one">
-           <button class="button button1" onclick="myMove()"><b> click</b></button>
-         </p>
-      </div>
-      <div class="row col-md-offset-4 col-md-4 " ><!-- bootstrap row-->
-	  <div id ="container">
-	    <div id ="animate"></div>
-	  </div>
+    <link rel = "stylesheet" type = "text/css" href="custom_styling.css">
+</head>
+<body>
+<div class = "container-fluid">
+    <div class = "row col-md-offset-4 col-md-4">
+        <h1> ALGORITHMIZER </h1>
     </div>
-   </div><!-- end of fluid container bootstrap -->
+    <div class ="row col-md-offset-0 col-md-0">
+        <p class = "one">
+            <button class="button" onclick="create_circles()"><b> circles </b></button>
+        </p>
+        <p class = "p_circles"></p>
+    </div>
+    <div class="row col-md-offset-4 col-md-4 " >
+    </div>
+</div><!-- end of fluid container bootstrap -->
 
-  </body>
+</body>
 
-  <!-- throw your scripts back here -->
-  <script src="slider.js"></script>
-</html>
+<!-- throw your scripts back here -->
+<script src="circle_data.js"></script>
