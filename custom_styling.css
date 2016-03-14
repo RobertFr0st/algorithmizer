@@ -52,3 +52,15 @@ h1
 p.one {
   padding-top : 100px;
 }
+
+#implimentation {
+    margin-bottom: 2em;
+}
+
+#graph {
+    padding: 0.5em;
+}
+
+input {
+    width: 3em;
+}

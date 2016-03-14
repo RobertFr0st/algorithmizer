@@ -17,10 +17,21 @@
     <div class = "row col-md-offset-4 col-md-4">
         <h1> ALGORITHMIZER </h1>
     </div>
-    <div class ="row col-md-offset-0 col-md-0">
-        <p class = "one">
-            <button class="button" onclick="create_circles()"><b> circles </b></button>
-        </p>
+    <div class ="row col-md-offset-4 col-md-4">
+        <select id="implimentation">
+        <option value="selection">Selection Sort</option>
+        <option value="insertion">Insertion Sort</option>
+        <option value="bubble">Bubble Sort</option>
+      </select>
+
+      <button id="play">Play</button>
+
+      Speed: <input type="text" value="50" id="speed"></input>ms
+      Length: <input type="text" value="15" id="element_count"></input>
+
+      <button id="reset">Reset</button>
+
+      <div id="graph"></div>
     </div>
     <div class="row col-md-offset-4 col-md-4 " >
     </div>
@@ -29,4 +40,4 @@
 </body>
 </html>
 <!-- throw your scripts back here -->
-<script src="circle_data.js"></script>
+<script src="visualization.js"></script>
