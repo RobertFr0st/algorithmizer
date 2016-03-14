@@ -8,6 +8,76 @@ var w = 500, h = 190,
     svg;
 
 
+// generate random dataset
+function setDataset(length) {
+  dataset = [];
+
+  //fill the dataset and set to default state
+  for (var i = 0; i < length; i++)
+  {
+    dataset[i] = { value: (Math.random() * length * 2) | 0, state: states.default };
+  }
+
+  //draw the graphic
+  scale = d3.scale.linear()
+    .domain([0, d3.max(dataset, function(d) { return d.value; })])
+    .range([9, h]);
+}
+
+// create rect in svg
+function setRects(set) {
+
+  //clear this html element
+  document.getElementById("graph").innerHTML = "";
+
+  //create the svg
+  svg = d3.select("#graph")
+    .append("svg")
+    .attr("width", w)
+    .attr("height", h);
+
+  //draw the graphic
+  svg.selectAll("rect")
+    .data(set)
+    .enter()
+    .append("rect")
+    .attr({
+      x: function(d, i) {
+        return i * (w / set.length);
+      },
+      y: function(d, i) {
+        return h - scale(d.value);
+      },
+      width: function(d, i) {
+        return (w / set.length) - padding;
+      },
+      height: function(d, i) {
+        return scale(d.value);
+      },
+      fill: function(d, i) {
+        return colors[d.state];
+      }
+    });
+}
+
+//update
+function redrawRects(set) {
+  var rects = svg.selectAll("rect")
+    .data(set)
+    .transition()
+    .duration(speed / 2 | 0)
+    .attr({
+      y: function(d, i) {
+        return h - scale(d.value);
+      },
+      height: function(d, i) {
+        return scale(d.value);
+      },
+      fill: function(d, i) {
+        return colors[d.state];
+      }
+    });
+}
 
 //choice logic, will be removed since we have 1 implimentation per page
 document.getElementById("implimentation").addEventListener("change", function() {
