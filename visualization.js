@@ -7,6 +7,14 @@ var w = 500, h = 190,
     colors = ["#B7C4CF", "#3565A1", "#D55511", "#74A82A", "#A42F11", "#fff"],
     svg;
 
+// init the graph
+setDataset(element_count);
+setRects(dataset);
+
+//generic definition
+var sorts = {};
+
+
 
 // generate random dataset
 function setDataset(length) {
