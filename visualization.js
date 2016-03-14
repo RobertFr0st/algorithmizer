@@ -14,7 +14,85 @@ setRects(dataset);
 //generic definition
 var sorts = {};
 
+//todo: put length input on slider so bad input is not possible
+//selection implimentation
+sorts.selection = function()
+{
+  var i, j, minimum_index, isInner;
+  j = 0; isInner = false;
 
+  timer = setInterval(function()
+  {
+    //done sorting clean up
+    if(j == dataset.length - 1)
+    {
+      clearInterval(timer);
+    }
+
+    //set this as element to swap with
+    dataset[j].state = states.current;
+
+    //upon next i iteration set first element as minimum
+    if (!isInner)
+    {
+      minimum_index = j;
+      i = j + 1;
+      isInner = true;
+    }
+    if (i < dataset.length)
+    {
+      //reset previous element to no longer being compared
+      if (dataset[i - 1].state === states.compare)
+        dataset[i - 1].state = states.default;
+
+      //set current element to being compared 
+      dataset[i].state = states.compare;
+
+      //current element is new minimum 
+      if (dataset[i].value < dataset[minimum_index].value)
+      {
+        //reset previous minimum state
+        if (minimum_index !== j)
+          dataset[minimum_index].state = states.default;
+
+        //set new minimum
+        minimum_index = i;
+        dataset[minimum_index].state = states.minimal;
+      }
+
+      //move on to next inner for loop element
+      i++;
+    }
+    else
+    {
+      isInner = false;
+
+      //perform the swap
+      swap(minimum_index, j);
+
+      //reset last checked element to default
+      dataset[i - 1].state = states.default;
+
+      //reset minimum to default
+      dataset[minimum_index].state = states.default;
+
+      //set comparing element to finished
+      dataset[j].state = states.finished;
+
+      //move on to next element in the array
+      j++;
+    }
+
+    redrawRects(dataset);
+  }, speed);
+}
+
+function swap(i, j)
+{
+  var tmp = dataset[i];
+  dataset[i] = dataset[j];
+  dataset[j] = tmp;
+}
 
 // generate random dataset
 function setDataset(length) {
