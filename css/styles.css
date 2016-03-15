@@ -1,0 +1,53 @@
+@charset "UTF-8";
+h1, h3, p {
+	text-align: center;
+	color: #000000;
+	-webkit-box-shadow: 0px 0px #F20C0F;
+	box-shadow: 0px 0px #F20C0F;
+	font-style: normal;
+}
+#main {
+	width: 75%;
+	min-width: 0px;
+	max-width: 750px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+footer {
+	margin-top: 60px;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	background-color: #5E5C5C;
+	color: #ffffff;
+	text-align: center;
+	bottom: 0px;
+}
+.navbar.navbar-default {
+	border-right-width: 0px;
+	border-radius: 0px;
+	background-color: #5E5C5C;
+	color: #ffffff;
+	margin-top: 20px;
+	text-shadow: 0px 0px #3E043E;
+	text-decoration: none;
+}
+.image-fill {
+	width: 100%;
+	border-right-width: 0px;
+}
+#wrapper {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.intro {
+	font-size: large;
+	color: #000000;
+}
+#colomH {
+	bottom: auto;
+}
+.contact {
+	text-align: left;
+}
