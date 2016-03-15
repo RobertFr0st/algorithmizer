@@ -1,32 +1,91 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <!-- bootstrap-->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Algorithmizer</title>
 
-    <!--added JavaScript library-->
-    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<!-- Bootstrap -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet" type="text/css">
 
-    <!-- bootstrap link -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-    <!-- custom css file link-->
-    <link rel = "stylesheet" type = "text/css" href="custom_styling.css">
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
-<body>
-<div class = "container-fluid">
-    <div class = "row col-md-offset-4 col-md-4">
-        <h1> ALGORITHMIZER </h1>
+<body class="bg-primary">
+<div class="container-fluid" id="wrapper">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+        <ul class="nav navbar-nav navbar-left">
+          <li><a href="index.html">Algorithmizer</a></li></ul>
+        </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="defaultNavbar1">
+<ul class="nav navbar-nav navbar-right">
+          <li></li>
+          <li><a href="Sorting/About.html">About</a></li>
+          <li><a href="Sorting/Contact.html">Contact</a></li>
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Algorithms<span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="Sorting/Selection.html">Selection Sort</a></li>
+              <li><a href="Sorting/Insertion.html">Insertion Sort</a></li>
+              <li><a href="Sorting/Merge.html">Merge Sort</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Brief Tutorial</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
     </div>
-    <div class ="row col-md-offset-0 col-md-0">
-        <p class = "one">
-            <button class="button" onclick="create_circles()"><b> circles </b></button>
-        </p>
-    </div>
-    <div class="row col-md-offset-4 col-md-4 " >
-    </div>
-</div><!-- end of fluid container bootstrap -->
+    <!-- /.container-fluid -->
+  </nav>
+</div>
+    <!-- /.container-fluid -->
 
+<img src="images/algorithmizer(1).jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
+
+<article id="main"><p id="intro"> The primary purpose of Algorithmizer is to help students who are studying Data Structures and Algorithms to understand the algorithms via descriptive visualization, and to make the Algorithms Visualizer a helpful tool for teachers in explaining said algorithms </p></article>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="thumbnail"><a href="Sorting/Insertion.html"><img src="images/insertion sort(1).jpg" alt="Thumbnail Image 1" class="image-fill"></a>
+        <div class="caption">
+          <p>a simple comparison-based algorithm that is based on sorting a vector one element at the time, and maintaining the sorted part of the vector while finding the location for next element in that sorted part </p>
+          </div>
+        </div>
+      </div>
+    <div class="col-md-4">
+      <div class="thumbnail"><a href="Sorting/Merge.html"><img src="images/merge sort(1).jpg" alt="Thumbnail Image 1" class="image-fill"></a>
+        <div class="caption">
+          <p>a comparison-based algorithm that is based on partitioning of the data recursively into two parts until the size of each part is one or two elements, and then merging sorted parts back by comparing elements of two in ascending order and placing smaller ones first</p>
+          </div>
+        </div>
+      </div>
+    <div class="col-md-4">
+      <div class="thumbnail"><a href="Sorting/Selection.html"><img src="images/selection sort(1).jpg" alt="Thumbnail Image 1" class="image-fill"></a>
+        <div class="caption">
+          <p>a simple comparison-based algorithm that also splits the vector into two parts, one of which is already sorted. It is based on finding the smallest element in a vector at each iteration and swapping it with element preceding the last element in sorted part of the vector</p>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<div>
+<footer>&copy;Copyright 2016</footer>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script src="js/jquery-1.11.2.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="js/bootstrap.js"></script>
 </body>
 </html>
-<!-- throw your scripts back here -->
-<script src="circle_data.js"></script>
