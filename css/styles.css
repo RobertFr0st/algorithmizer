@@ -51,3 +51,15 @@ footer {
 .contact {
 	text-align: left;
 }
+
+#implementation {
+    margin-bottom: 2em;
+}
+
+#graph {
+    padding: 0.5em;
+}
+
+input {
+    width: 3em;
+}
