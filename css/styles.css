@@ -44,6 +44,9 @@ footer {
 .intro {
 	font-size: large;
 	color: #000000;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 #colomH {
 	bottom: auto;
@@ -62,4 +65,12 @@ footer {
 
 input {
     width: 3em;
+}
+.algorithm {
+	font-size: large;
+	color: #000000;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 600px;
 }
