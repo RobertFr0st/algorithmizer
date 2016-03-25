@@ -70,6 +70,35 @@
 
     <div id="graph"></div>
   </div>
+
+<article id="main"><p class="intro"> 
+Selection sort is a simple sorting algorithm done by comparison. The time complexity of selection sort is O(n^2 ) for an array containing n elements. Thus, it is quite an inefficient means of sorting for large data sets. Nevertheless, it is a very intuitive algorithm, and it has certain benefits.
+Selection sort is a particularly useful when the data set is a small list of elements, and when memory is limited. It is considered an “in-place” algorithm, which means that no additional storage is needed to complete the sort. The sort is done within the array that holds the original list.
+The Algorithm
+The array is essentially divided into two parts: the sorted sub-list (on the left of the array) and the remaining elements to be sorted.
+When the algorithm begins, the initial sorted sub-list is empty, and the unsorted portion of the array has size n. It then selects the first element in the array and iterates sequentially through the rest of the array, taking note of the smallest element found and its corresponding index.
+Once every element in the array is compared, the algorithm swaps the first element with the smallest element found in the list. (Ex: If element b is at index 0, and element a at index 5 is the smallest element in the array, then after the swap, element a will be at index 0 and element b will be at index 5).
+After the first swap, the sorted sub-list is of size 1, and contains only the smallest element in the list, and the remaining n-1 elements in the array are still unsorted.
+The algorithm then selects the second element in the array, and again iterates sequentially through the rest of the array, taking note of the smallest element found and its corresponding index.
+Once again, after element in the array is compared, the algorithm swaps the second element with the smallest element found in the unsorted portion of the list.
+After the second swap, the sorted sub-list is of size 2, and contains the 2 smallest elements in the list in sorted order. The remaining n-2 elements in the array are still unsorted.
+The algorithm continues in this pattern until the sorted sub-list is the size of the entire array.
+Example:
+You are given the following list
+<center>4  1  2  3</center>
+The algorithm first selects 4 and iterates through the list to find the smallest element. Once it compares every element, it is clear that 1 was the smallest element found. So then it swaps 1 and 4, and the sorted sub-list contains only the element 1.
+<center>4  1  2  3   ?   1  4  2  3   ?   1  4  2  3</center>
+The algorithm then selects the next item in the array, which is again 4 and iterates through the list to find the smallest element. Once it compares every element, it is clear that 2 was the smallest element found. So then it swaps 2 and 4, and the sorted sub-list contains the elements 1 and 2 in sorted order.
+<center>1  4  2  3   ?   1  2  4  3   ?   1  2  4  3</center>
+The algorithm then selects the next item in the array, which, once again, is 4 and iterates through the list to find the smallest element. Once it compares every element, it is clear that 3 was the smallest element found. So then it swaps 3 and 4, and the sorted sub-list contains the elements 1,2, and 3 in sorted order.
+<center>1  2  4  3   ?   1  2  3  4   ?   1  2  3  4</center>
+At this point, the algorithm selects 4 again, which is the last element in the list. Since it is the last element, no swapping needs to be done, and we are left with the sorted list:
+<center>1  2  3  4</center>
+
+
+ </p></article>
+
+
 <div>
 <footer>&copy;Copyright 2016</footer>
 </div>
