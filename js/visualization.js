@@ -99,6 +99,7 @@ function setDataset(length) {
   dataset = [];
 
   //fill the dataset and set to default state
+  if(length > 100) length = 100;
   for (var i = 0; i < length; i++)
   {
     dataset[i] = { value: (Math.random() * length * 2) | 0, state: states.default };
