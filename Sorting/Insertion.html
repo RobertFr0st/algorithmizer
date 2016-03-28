@@ -54,7 +54,21 @@
 
 <article id="main"><p class="intro"> a simple comparison-based algorithm that is based on sorting a vector one element at the time, and maintaining the sorted part of the vector while finding the location for next element in that sorted part </p></article>
 
-<div class="container"><p class="intro"> DIV/ Here we can insert code code and buttons </p></div>
+<div class ="container algorithm" >
+    <select id="implimentation">
+        <option value="insertion">Insertion Sort</option>
+    </select>
+
+    <button id="play">Play</button>
+
+    Speed: <input type="text" value="100" id="speed"> </input>ms
+    Length: <input type="text" value="15" id="element_count"></input>
+
+    <button id="reset">Reset</button>
+
+    <div id="graph"></div>
+</div>
+
 <div id = "footer">
 <footer>&copy;Copyright 2016</footer>
 </div>
@@ -62,7 +76,8 @@
 <script src="../js/jquery-1.11.2.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="../js/d3.min.js"></script>
 <script src="../js/bootstrap.js"></script>
-<script src=""></script>
+<script src="../visualization.js"></script>
 </body>
 </html>
