@@ -14,6 +14,34 @@ setRects(dataset);
 //generic definition
 var sorts = {};
 
+sorts.insertion = function() {
+  var i = 0, j = 0, was_swapped = false;
+
+  timer = setInterval(function() {
+    if (j == 0 || !was_swapped) {
+      dataset[j].state = states.finished;
+      i++;
+      j = i;
+      was_swapped = true;
+      dataset[i].state = states.current;
+      if (i == dataset.length) {          // done sorting, break from the loop
+        dataset[dataset.length - 1].state = states.finished;
+        clearInterval(timer);
+      }
+    } else {
+      was_swapped = false;
+      if (dataset[j].value < dataset[j - 1].value) {
+        swap(j, j - 1);
+        was_swapped = true;
+      }
+      dataset[j - 1].state = states.compare;
+      dataset[j].state = states.finished;
+      j--;
+    }
+    redrawRects(dataset);
+  }, speed);
+}
+
 //todo: put length input on slider so bad input is not possible
 //selection implimentation
 sorts.selection = function()
