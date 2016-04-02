@@ -7,6 +7,20 @@ var w = 500, h = 190,
     colors = ["#B7C4CF", "#3565A1", "#D55511", "#74A82A", "#A42F11", "#fff"],
     svg;
 
+//now call me like var p = new Command(true, 0, "finished")
+class Command
+{
+  isValue;
+  index;
+  change;
+  constructor(isValue, index, change)
+  {
+    this.isValue = isValue;
+    this.index = index;
+    this.change = change;
+  }
+}
+
 // init the graph
 setDataset(element_count);
 setRects(dataset);
@@ -120,6 +134,33 @@ function swap(i, j)
   var tmp = dataset[i];
   dataset[i] = dataset[j];
   dataset[j] = tmp;
+}
+
+function parse_commands(params)
+{
+  i = 0; 
+  timer = setInterval(function() {
+    if (i == params.length) { clearInterval(timer); }
+    else if(params[i].isValue === true) { dataset[params[i].index].value = params[i].change; }
+    else
+    {
+      if(params[i].change === "default")
+        dataset[params[i].index].state = states.default;
+      else if(params[i].change === "finished")
+        dataset[params[i].index].state = states.finished;
+      else if(params[i].change === "current")
+        dataset[params[i].index].state = states.current;
+      else if(params[i].change === "compare")
+        dataset[params[i].index].state = states.compare;
+      else if(params[i].change === "minimal")
+        dataset[params[i].index].state = states.minimal;
+      else if(params[i].change === "hide")
+        dataset[params[i].index].state = states.hide;
+      else { console.log("could not parse command: " + params[i].change); }
+    }
+    i += 1;
+    redrawRects(dataset);
+  }, speed);
 }
 
 // generate random dataset
