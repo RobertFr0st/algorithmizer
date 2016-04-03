@@ -186,7 +186,7 @@ function setRects(set) {
     .attr("width", w)
     .attr("height", h);
 
-  //draw the graphic
+  //draw the rectangles
   svg.selectAll("rect")
     .data(set)
     .enter()
@@ -208,6 +208,26 @@ function setRects(set) {
         return colors[d.state];
       }
     });
+
+  //draw values
+  /*svg.selectAll("text")
+    .data(set)
+    .enter()
+    .append("text")
+    .attr({
+      x: function(d, i) {
+        return i * (w / set.length);
+      },
+      y: function(d, i) {
+        return h - scale(d.value);
+      }/*,
+      width: function(d, i) {
+        return (w / set.length) - padding;
+      },
+      height: function(d, i) {
+        return scale(d.value);
+      }
+    });*/
 }
 
 //update
