@@ -171,7 +171,7 @@ function setDataset(length) {
   //draw the graphic
   scale = d3.scale.linear()
     .domain([0, d3.max(dataset, function(d) { return d.value; })])
-    .range([9, h]);
+    .range([9, h-15]);
 }
 
 // create rect in svg
@@ -209,25 +209,28 @@ function setRects(set) {
       }
     });
 
+  //font size choosing logic
+  if(set.length > 50) text_height = "0"
+  else if(set.length > 35) text_height = "8"
+  else if(set.length > 25) text_height = "12"
+  else text_height = "18"
+
   //draw values
-  /*svg.selectAll("text")
+  svg.selectAll("text")
     .data(set)
     .enter()
     .append("text")
+    .text(function(d, i) { return d.value;})
+    .attr("font-size", text_height)
+    .attr("text-anchor", "middle")
     .attr({
       x: function(d, i) {
-        return i * (w / set.length);
+        return i * (w / set.length) + (w/set.length)/2;
       },
       y: function(d, i) {
         return h - scale(d.value);
-      }/*,
-      width: function(d, i) {
-        return (w / set.length) - padding;
-      },
-      height: function(d, i) {
-        return scale(d.value);
       }
-    });*/
+    });
 }
 
 //update
@@ -235,7 +238,8 @@ function redrawRects(set) {
   var rects = svg.selectAll("rect")
     .data(set)
     .transition()
-    .duration(speed / 2 | 0)
+    .duration(speed/2 | 0)
+    .ease("quad")
     .attr({
       y: function(d, i) {
         return h - scale(d.value);
@@ -247,7 +251,33 @@ function redrawRects(set) {
         return colors[d.state];
       }
     });
+
+  //draw values
+  svg.selectAll("text")
+    .data(set)
+    .transition()
+    .duration(speed)
+    .ease("quad")
+    .tween('text', function(d, i) {
+      var currentValue = +this.textContent;
+      var interpolator = d3.interpolateRound(currentValue, d.value);
+      return function(t) { this.textContent = interpolator(t); };
+    })
+    .attr({
+      y: function(d, i) {
+        return h - scale(d.value);
+      }
+    });
 }
+
+function tweenText(d, i)
+{
+  var currentValue = +this.textContent;
+  var interpolator = d3.interpolateRound(currentValue, d.value);
+console.log(currentValue + " " + d.value);
+  return function(t) { this.textContent = interpolator(t); };
+}
+
 
 //choice logic, will be removed since we have 1 implimentation per page
 document.getElementById("implimentation").addEventListener("change", function() {
