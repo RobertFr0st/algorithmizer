@@ -8,17 +8,11 @@ var w = 500, h = 190,
     svg;
 
 //now call me like var p = new Command(true, 0, "finished")
-class Command
+function Command(isValue, index, change)
 {
-  isValue;
-  index;
-  change;
-  constructor(isValue, index, change)
-  {
-    this.isValue = isValue;
-    this.index = index;
-    this.change = change;
-  }
+  this.isValue = isValue;
+  this.index = index;
+  this.change = change;
 }
 
 // init the graph
