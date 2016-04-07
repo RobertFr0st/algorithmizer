@@ -1,7 +1,7 @@
 // custom variables
 var w = 500, h = 190,
     element_count = 15, speed = 50,
-    implimentation = "selection",
+    implimentation = "insertion"/*"selection"*/,
     dataset, scale, padding = 2, timer,
     states = {"default": 0, "finished": 1, "current": 2, "compare": 3, "minimal": 4, "hide": 5},
     colors = ["#B7C4CF", "#3565A1", "#D55511", "#74A82A", "#A42F11", "#fff"],
@@ -45,6 +45,53 @@ sorts.insertion = function() {
       dataset[j - 1].state = states.compare;
       dataset[j].state = states.finished;
       j--;
+    }
+    redrawRects(dataset);
+  }, speed);
+}
+
+//selection implimentation
+sorts.bubble = function()
+{
+  var i, j, maximum_index, isInner, unsort_length;
+  j = 0; first = false;
+  unsort_length = dataset.length
+  timer = setInterval(function()
+  {
+ 
+    if (unsort_length-1 == 0)
+    {
+      clearInterval(timer);
+    }  
+    if (j !== unsort_length-1){
+      maximum_index=j;
+ 
+      //set this as element to swap with
+      dataset[j].state = states.current;
+
+      //set current element to being compared 
+      dataset[j+1].state = states.compare;
+
+      //current element is new minimum 
+      if (dataset[j+1].value < dataset[maximum_index].value)
+      {
+        //perform the swap
+        swap(maximum_index, j);
+
+        //reset last checked element to default
+        dataset[j].state = states.default;
+
+        //reset minimum to default
+        dataset[maximum_index].state = states.default;
+
+        //set comparing element to finished
+        dataset[j].state = states.finished;
+      }
+      //move on to next element in the array
+      j++;
+    } else {
+      unsort_length = unsort_length - 1;
+      j=0;
     }
     redrawRects(dataset);
   }, speed);
@@ -282,6 +329,7 @@ console.log(currentValue + " " + d.value);
 //choice logic, will be removed since we have 1 implimentation per page
 document.getElementById("implimentation").addEventListener("change", function() {
     implimentation = this.value;
+    console.log(implimentation);
 });
 
 //reset button
