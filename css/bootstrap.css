@@ -1119,7 +1119,8 @@ figure {
   margin: 0;
 }
 img {
-  vertical-align: middle;
+	vertical-align: middle;
+	text-align: center;
 }
 .img-responsive,
 .thumbnail > img,
@@ -1282,7 +1283,8 @@ h3,
 }
 h4,
 .h4 {
-  font-size: 18px;
+	font-size: 18px;
+	text-align: center;
 }
 h5,
 .h5 {
@@ -4916,7 +4918,7 @@ a.badge:focus {
 .thumbnail a > img {
 	margin-right: 0px;
 	margin-left: 0px;
-	width: 100%;
+	width: auto;
 }
 a.thumbnail:hover,
 a.thumbnail:focus,
