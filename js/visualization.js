@@ -82,31 +82,15 @@ sorts.bubble = function()
       //current element is new minimum 
       if (dataset[j+1].value < dataset[j].value)
       {
-      //set current element to being compared 
-        //perform the swap
         doswap = true;
-	//	dataset[j+1].state = states.default;
-		//swap(j, j+1);
-		//dataset[j-1].state = states.default;
-      //move on to next element in the array
       }
-	 //j++;
-      //reset last checked element to default
-      //dataset[j].state = states.default;
 
+	j++;
     } else {
 	  dataset[j].state = states.finished;
       unsort_length = unsort_length - 1;
       j=0;
     }
-    //if (doswap === true){
-	//	swap(j, j+1);
-	//	doswap = false;
-	//}else{
-	   //dataset[j+1].state = states.default;
-	   //dataset[j].state = states.default;
-	//}
-	j++;
 	}
     redrawRects(dataset);
   }, speed);
