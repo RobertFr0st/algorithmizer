@@ -1,7 +1,7 @@
 // custom variables
 var w = 500, h = 190,
     element_count = 15, speed = 50,
-    implimentation = "insertion"/*"selection"*/,
+    implimentation = "insertion",
     dataset, scale, padding = 2, timer,
     states = {"default": 0, "finished": 1, "current": 2, "compare": 3, "minimal": 4, "hide": 5},
     colors = ["#B7C4CF", "#3565A1", "#D55511", "#74A82A", "#A42F11", "#fff"],
@@ -170,6 +170,127 @@ sorts.selection = function()
   }, speed);
 }
 
+sorts.quick = function()
+{
+  var quickset = dataset;
+  recursive_sort(quickset, 0, quickset.length);
+  dataset = quickset
+  redrawRects(dataset);
+}
+
+//incrimentally find values that are in the wrong position in relation to the pivot
+function incrimentLeft(quickset, index, pivot, maxIndex)
+{
+  for(var i = index; i <= maxIndex; i++)
+    if(quickset[i].value >= pivot) return i;
+}
+
+//incrimentally find values that are in the wrong position in relation to the pivot
+function decrimentRight(quickset, index, pivot, minIndex)
+{
+  for(var i = index; i >= minIndex; i--)
+    if(quickset[i].value <= pivot) return i;
+}
+
+//trivial swap case
+function tmpswap(quickset, a, b)
+{
+  var tmp = quickset[a];
+  quickset[a] = quickset[b];
+  quickset[b] = tmp;
+}
+
+//determines if a swap is necessary for trivial case
+function vectorSort(quickset, a, b)
+{
+  if(quickset[a].value <= quickset[b].value) return;
+  tmpswap(quickset, a, b);
+}
+
+//carries out median calculation
+function findPivot(quickset, start, size)
+{
+  //setup
+  var stop = start + (size-1);
+  var middle = (start + (size/2)) | 0;
+  var a = quickset[start].value;//start
+  var b = quickset[stop].value;//last
+  var c = quickset[middle].value;//middle
+
+  //last is median
+  if((b >= a && b <= c)||(b >= c && b <= a))
+  {
+    tmpswap(quickset, start, stop);
+    return;
+  }
+
+  //middle is median
+  if((c >= a && c <= b)||(c >= b && c <= a))
+  {
+    tmpswap(quickset, start, middle);
+    return;
+  }
+
+  //otherwise start is median
+}
+
+//totally fun
+function recursive_sort(quickset, start, size)
+{
+  //base case 1: size is out of index
+  if(size < 2) return;
+
+  //base case 2: trivial case has been reached
+  if(size == 2)
+  {
+    vectorSort(quickset, start, start+1);
+    return;
+  }
+
+  //both finds pivot and moves it to start
+  findPivot(quickset, start, size);
+
+  var pivot = quickset[start].value;
+
+  var leftIndex = start+1;
+  var rightIndex = start+size-1;
+
+  //copys are so the increment and decrement functions know the edges of their partition
+  var copyLeftIndex = leftIndex;
+  var copyRightIndex = rightIndex;
+
+  while(leftIndex < rightIndex)
+  {
+    //find next pair out of order based on pivot
+    leftIndex = incrimentLeft(quickset, leftIndex, pivot, copyRightIndex);
+    rightIndex = decrimentRight(quickset, rightIndex, pivot, copyLeftIndex);
+
+    //carry out swap
+    if(leftIndex < rightIndex)
+    {
+      tmpswap(quickset, leftIndex, rightIndex);
+
+      //keep indices moving in event of ties
+      if(quickset[leftIndex].value == pivot && quickset[rightIndex].value == pivot)
+        rightIndex -= 1;
+    }
+  }
+
+  var pivotIndex = leftIndex -1;
+
+  //move pivot to middle of vector
+  tmpswap(quickset, start, pivotIndex);
+
+  //first half
+  var firstSize = pivotIndex - start;
+  var secondSize = size - firstSize - 1;
+
+  recursive_sort(quickset, start, firstSize);
+
+  //second half
+  recursive_sort(quickset, leftIndex, secondSize);
+}
+
 function swap(i, j)
 {
   var tmp = dataset[i];
@@ -179,7 +300,7 @@ function swap(i, j)
 
 function parse_commands(params)
 {
-  i = 0; 
+  var i = 0; 
   timer = setInterval(function() {
     if (i == params.length) { clearInterval(timer); }
     else if(params[i].isValue === true) { dataset[params[i].index].value = params[i].change; }
@@ -211,9 +332,7 @@ function setDataset(length) {
   //fill the dataset and set to default state
   if(length > 100) length = 100;
   for (var i = 0; i < length; i++)
-  {
     dataset[i] = { value: (Math.random() * length * 2) | 0, state: states.default };
-  }
 
   //draw the graphic
   scale = d3.scale.linear()
@@ -316,15 +435,6 @@ function redrawRects(set) {
       }
     });
 }
-
-function tweenText(d, i)
-{
-  var currentValue = +this.textContent;
-  var interpolator = d3.interpolateRound(currentValue, d.value);
-console.log(currentValue + " " + d.value);
-  return function(t) { this.textContent = interpolator(t); };
-}
-
 
 //choice logic, will be removed since we have 1 implimentation per page
 document.getElementById("implimentation").addEventListener("change", function() {
