@@ -55,12 +55,27 @@
 <img src="../images/quick sort banner.jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
 
 <article id="main"><p class="intro"> DESCRIPTION </p></article>
-<div class="container"><p class="intro"> DIV/ Here we can insert code code and buttons </p></div>
+<div class ="container algorithm" >
+    <select id="implimentation">
+        <option value="">Debugging Switch From me</option>
+        <option value="quick">Quick Sort</option>
+    </select>
+
+    <button id="play">Play</button>
+
+    Speed: <input type="text" value="100" id="speed"> </input>ms
+    Length: <input type="text" value="15" id="element_count"></input>
+
+    <button id="reset">Reset</button>
+
+    <div id="graph"></div>
+</div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 <script src="../js/jquery-1.11.3.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="../js/d3.min.js"></script>
 <script src="../js/bootstrap.js"></script>
 <script src="../js/visualization.js"></script>
 </body>
