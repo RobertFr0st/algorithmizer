@@ -3,11 +3,13 @@ var w = 500, h = 190,
     element_count = 15, speed = 50,
     implimentation = "insertion",
     dataset, scale, padding = 2, timer,
-    states = {"default": 0, "finished": 1, "current": 2, "compare": 3, "minimal": 4, "hide": 5},
-    colors = ["#B7C4CF", "#3565A1", "#D55511", "#74A82A", "#A42F11", "#fff"],
+    states = {"default": 0, "finished": 1, "current": 2, "compare": 3, "minimal": 4, "hide": 5, "pivot": 6, "left": 7, "right": 8},
+    colors = ["#B7C4CF", "#3565A1", "#D55511", "#74A82A", "#A42F11", "#fff", "#0f6727", "#14b8e4", "#e3361e"],
     svg;
 
-//now call me like var p = new Command(true, 0, "finished")
+//now call me like var p = new Command(false, index, "finished") //
+//now call me like var p = new Command(true, index, new_value) //change value of 1 bar
+//now call me like var p = new Command(2, from_index, to_index) //swap command
 function Command(isValue, index, change)
 {
   this.isValue = isValue;
@@ -172,44 +174,61 @@ sorts.selection = function()
 
 sorts.quick = function()
 {
-  var quickset = dataset;
-  var command_list;
+  var quickset = dataset.slice(0);
+  var command_list = [];
   recursive_sort(command_list, quickset, 0, quickset.length);
   parse_commands(command_list);
 }
 
 //incrimentally find values that are in the wrong position in relation to the pivot
-function incrimentLeft(quickset, index, pivot, maxIndex)
+
+//command_list.push(new Command(false, rightIndex, "right"));
+function incrimentLeft(command_list, quickset, index, pivot, maxIndex)
 {
   for(var i = index; i <= maxIndex; i++)
+  {
+    command_list.push(new Command(false, i, "left"));
     if(quickset[i].value >= pivot) return i;
+    command_list.push(new Command(false, i, "default"));
+  }
 }
 
 //incrimentally find values that are in the wrong position in relation to the pivot
-function decrimentRight(quickset, index, pivot, minIndex)
+function decrimentRight(command_list, quickset, index, pivot, minIndex)
 {
   for(var i = index; i >= minIndex; i--)
+  {
+    command_list.push(new Command(false, i, "right"));
     if(quickset[i].value <= pivot) return i;
+    command_list.push(new Command(false, i, "default"));
+  }
 }
 
 //trivial swap case
-function tmpswap(quickset, a, b)
+function tmpswap(command_list, quickset, a, b)
 {
+  //swap states and values
+  command_list.push(new Command(2, a, b));
+
   var tmp = quickset[a];
   quickset[a] = quickset[b];
   quickset[b] = tmp;
 }
 
 //determines if a swap is necessary for trivial case
-function vectorSort(quickset, a, b)
+function vectorSort(command_list, quickset, a, b)
 {
+  command_list.push(new Command(false, a, "compare"));
+  command_list.push(new Command(false, b, "compare"));
   if(quickset[a].value <= quickset[b].value) return;
-  tmpswap(quickset, a, b);
+  tmpswap(command_list, quickset, a, b);
 }
 
 //carries out median calculation
-function findPivot(quickset, start, size)
+function findPivot(command_list, quickset, start, size)
 {
+  //mark bars for comparison
+
   //setup
   var stop = start + (size-1);
   var middle = (start + (size/2)) | 0;
@@ -217,40 +236,59 @@ function findPivot(quickset, start, size)
   var b = quickset[stop].value;//last
   var c = quickset[middle].value;//middle
 
+  //visualize compares
+  command_list.push(new Command(false, start, "compare"));
+  command_list.push(new Command(false, stop, "compare"));
+  command_list.push(new Command(false, middle, "compare"));
+
   //last is median
   if((b >= a && b <= c)||(b >= c && b <= a))
   {
-    tmpswap(quickset, start, stop);
+    command_list.push(new Command(false, stop, "pivot"));
+    command_list.push(new Command(false, start, "default"));
+    command_list.push(new Command(false, middle, "default"));
+    tmpswap(command_list, quickset, start, stop);
     return;
   }
 
   //middle is median
   if((c >= a && c <= b)||(c >= b && c <= a))
   {
-    tmpswap(quickset, start, middle);
+    command_list.push(new Command(false, middle, "pivot"));
+    command_list.push(new Command(false, stop, "default"));
+    command_list.push(new Command(false, start, "default"));
+    tmpswap(command_list, quickset, start, middle);
     return;
   }
 
   //otherwise start is median
+  command_list.push(new Command(false, start, "pivot"));
+  command_list.push(new Command(false, middle, "default"));
+  command_list.push(new Command(false, stop, "default"));
 }
 
 //totally fun
 function recursive_sort(command_list, quickset, start, size)
 {
   //base case 1: size is out of index
-  if(size < 2) return;
+  if(size < 2)
+  {
+    command_list.push(new Command(false, start, "finished"));
+    return;
+  }
 
   //base case 2: trivial case has been reached
   if(size == 2)
   {
     //compare and swap visual
-    vectorSort(quickset, start, start+1);
+    vectorSort(command_list, quickset, start, start+1);
+    command_list.push(new Command(false, start, "finished"));
+    command_list.push(new Command(false, start+1, "finished"));
     return;
   }
 
-  //pivot finding visual(choose 3, chose median element, swap with first element if not first)
   //both finds pivot and moves it to start
-  findPivot(quickset, start, size);
+  findPivot(command_list, quickset, start, size);
 
   var pivot = quickset[start].value;
 
@@ -264,40 +302,46 @@ function recursive_sort(command_list, quickset, start, size)
 
   while(leftIndex < rightIndex)
   {
-    //move left and right till they point to a value swappable
     //find next pair out of order based on pivot
-    leftIndex = incrimentLeft(quickset, leftIndex, pivot, copyRightIndex);
-    rightIndex = decrimentRight(quickset, rightIndex, pivot, copyLeftIndex);
+    leftIndex = incrimentLeft(command_list, quickset, leftIndex, pivot, copyRightIndex);
+    rightIndex = decrimentRight(command_list, quickset, rightIndex, pivot, copyLeftIndex);
 
     //carry out swap
     if(leftIndex < rightIndex)
     {
+      command_list.push(new Command(false, leftIndex, "compare"));
+      command_list.push(new Command(false, rightIndex, "compare"));
+
       //show the swap
-      tmpswap(quickset, leftIndex, rightIndex);
+      tmpswap(command_list, quickset, leftIndex, rightIndex);
+
+
+      command_list.push(new Command(false, leftIndex, "default"));
+      command_list.push(new Command(false, rightIndex, "default"));
 
       //keep indices moving in event of ties
-      // a special case move right index
       if(quickset[leftIndex].value == pivot && quickset[rightIndex].value == pivot)
         rightIndex -= 1;
     }
-    //keep r and l unhighlight any other elements except pivot
   }
+  command_list.push(new Command(false, leftIndex, "default"));
+  command_list.push(new Command(false, rightIndex, "default"));
 
   var pivotIndex = leftIndex -1;
 
   //move pivot to middle of vector
-  //swap pivot with the current right index
-  tmpswap(quickset, start, pivotIndex);
-
-  //recursion stop here for now, big thing is the inverting of bar directions to represent partitions
+  tmpswap(command_list, quickset, start, pivotIndex);
 
   //first half
-/*  var firstSize = pivotIndex - start;
+  var firstSize = pivotIndex - start;
   recursive_sort(command_list, quickset, start, firstSize);
 
   //second half
   var secondSize = size - firstSize - 1;
-  recursive_sort(command_list, quickset, leftIndex, secondSize);*/
+  recursive_sort(command_list, quickset, leftIndex, secondSize);
+
+  //mark pivot as finished
+  command_list.push(new Command(false, pivotIndex, "finished"));
 }
 
 function swap(i, j)
@@ -309,11 +353,15 @@ function swap(i, j)
 
 function parse_commands(params)
 {
-  if(params == null) { console.log("no data to parse"); return; }
   var i = 0; 
   timer = setInterval(function() {
+
     if (i == params.length) { clearInterval(timer); }
-    else if(params[i].isValue === true) { dataset[params[i].index].value = params[i].change; }
+    else if(params[i].isValue == 1) { dataset[params[i].index].value = params[i].change; }
+    else if(params[i].isValue == 2)
+    {
+      swap(params[i].index, params[i].change);
+    }
     else
     {
       if(params[i].change === "default")
@@ -328,6 +376,12 @@ function parse_commands(params)
         dataset[params[i].index].state = states.minimal;
       else if(params[i].change === "hide")
         dataset[params[i].index].state = states.hide;
+      else if(params[i].change === "pivot")
+        dataset[params[i].index].state = states.pivot;
+      else if(params[i].change === "left")
+        dataset[params[i].index].state = states.left;
+      else if(params[i].change === "right")
+        dataset[params[i].index].state = states.right;
       else { console.log("could not parse command: " + params[i].change); }
     }
     i += 1;
