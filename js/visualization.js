@@ -53,46 +53,61 @@ sorts.insertion = function() {
 //selection implimentation
 sorts.bubble = function()
 {
-  var i, j, maximum_index, isInner, unsort_length;
-  j = 0; first = false;
+  var j, isInner, unsort_length;
+  j = 0; doswap = false; swapped = false;
   unsort_length = dataset.length
   timer = setInterval(function()
   {
- 
+	if (swapped == true) swapped =false;
+	if (j > 0){
+	   dataset[j-1].state = states.default;
+	   dataset[j].state = states.default;
+		if (doswap === true){
+			swap(j, j-1);
+			doswap = false;
+			swapped = true;
+		}
+	}
     if (unsort_length-1 == 0)
     {
       clearInterval(timer);
-    }  
-    if (j !== unsort_length-1){
-      maximum_index=j;
- 
+    }
+	if (swapped == false){
+    if (j < unsort_length-1){
       //set this as element to swap with
       dataset[j].state = states.current;
-
-      //set current element to being compared 
       dataset[j+1].state = states.compare;
 
+
       //current element is new minimum 
-      if (dataset[j+1].value < dataset[maximum_index].value)
+      if (dataset[j+1].value < dataset[j].value)
       {
+      //set current element to being compared 
         //perform the swap
-        swap(maximum_index, j);
-
-        //reset last checked element to default
-        dataset[j].state = states.default;
-
-        //reset minimum to default
-        dataset[maximum_index].state = states.default;
-
-        //set comparing element to finished
-        dataset[j].state = states.finished;
-      }
+        doswap = true;
+	//	dataset[j+1].state = states.default;
+		//swap(j, j+1);
+		//dataset[j-1].state = states.default;
       //move on to next element in the array
-      j++;
+      }
+	 //j++;
+      //reset last checked element to default
+      //dataset[j].state = states.default;
+
     } else {
+	  dataset[j].state = states.finished;
       unsort_length = unsort_length - 1;
       j=0;
     }
+    //if (doswap === true){
+	//	swap(j, j+1);
+	//	doswap = false;
+	//}else{
+	   //dataset[j+1].state = states.default;
+	   //dataset[j].state = states.default;
+	//}
+	j++;
+	}
     redrawRects(dataset);
   }, speed);
 }
