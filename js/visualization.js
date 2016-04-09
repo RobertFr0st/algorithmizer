@@ -173,9 +173,9 @@ sorts.selection = function()
 sorts.quick = function()
 {
   var quickset = dataset;
-  recursive_sort(quickset, 0, quickset.length);
-  dataset = quickset
-  redrawRects(dataset);
+  var command_list;
+  recursive_sort(command_list, quickset, 0, quickset.length);
+  parse_commands(command_list);
 }
 
 //incrimentally find values that are in the wrong position in relation to the pivot
@@ -235,7 +235,7 @@ function findPivot(quickset, start, size)
 }
 
 //totally fun
-function recursive_sort(quickset, start, size)
+function recursive_sort(command_list, quickset, start, size)
 {
   //base case 1: size is out of index
   if(size < 2) return;
@@ -243,15 +243,18 @@ function recursive_sort(quickset, start, size)
   //base case 2: trivial case has been reached
   if(size == 2)
   {
+    //compare and swap visual
     vectorSort(quickset, start, start+1);
     return;
   }
 
+  //pivot finding visual(choose 3, chose median element, swap with first element if not first)
   //both finds pivot and moves it to start
   findPivot(quickset, start, size);
 
   var pivot = quickset[start].value;
 
+  //draw left and right
   var leftIndex = start+1;
   var rightIndex = start+size-1;
 
@@ -261,6 +264,7 @@ function recursive_sort(quickset, start, size)
 
   while(leftIndex < rightIndex)
   {
+    //move left and right till they point to a value swappable
     //find next pair out of order based on pivot
     leftIndex = incrimentLeft(quickset, leftIndex, pivot, copyRightIndex);
     rightIndex = decrimentRight(quickset, rightIndex, pivot, copyLeftIndex);
@@ -268,27 +272,32 @@ function recursive_sort(quickset, start, size)
     //carry out swap
     if(leftIndex < rightIndex)
     {
+      //show the swap
       tmpswap(quickset, leftIndex, rightIndex);
 
       //keep indices moving in event of ties
+      // a special case move right index
       if(quickset[leftIndex].value == pivot && quickset[rightIndex].value == pivot)
         rightIndex -= 1;
     }
+    //keep r and l unhighlight any other elements except pivot
   }
 
   var pivotIndex = leftIndex -1;
 
   //move pivot to middle of vector
+  //swap pivot with the current right index
   tmpswap(quickset, start, pivotIndex);
 
-  //first half
-  var firstSize = pivotIndex - start;
-  var secondSize = size - firstSize - 1;
+  //recursion stop here for now, big thing is the inverting of bar directions to represent partitions
 
-  recursive_sort(quickset, start, firstSize);
+  //first half
+/*  var firstSize = pivotIndex - start;
+  recursive_sort(command_list, quickset, start, firstSize);
 
   //second half
-  recursive_sort(quickset, leftIndex, secondSize);
+  var secondSize = size - firstSize - 1;
+  recursive_sort(command_list, quickset, leftIndex, secondSize);*/
 }
 
 function swap(i, j)
@@ -300,6 +309,7 @@ function swap(i, j)
 
 function parse_commands(params)
 {
+  if(params == null) { console.log("no data to parse"); return; }
   var i = 0; 
   timer = setInterval(function() {
     if (i == params.length) { clearInterval(timer); }
