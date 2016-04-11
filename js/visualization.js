@@ -170,6 +170,14 @@ sorts.selection = function()
   }, speed);
 }
 
+sorts.heap = function()
+{
+  var heapset = dataset.slice(0);
+  var command_list = [];
+  sort_heap(command_list, heapset);
+  parse_commands(command_list);
+}
+
 sorts.quick = function()
 {
   var quickset = dataset.slice(0);
@@ -339,6 +347,77 @@ function recursive_sort(command_list, quickset, start, size)
 
   //mark pivot as finished
   command_list.push(new Command(false, pivotIndex, "finished"));
+}
+
+function sort_heap(commandlist, mergeset)
+{
+  // Turn into a heap where the root is the maximum element 
+  for (var i = ((mergeset.length / 2) | 0); i >= 0; i--)
+  {
+    var index = i;
+    commandlist.push(new Command(false, index, "pivot"));
+    while(true)
+    {      
+      var leftchild = index*2+1;
+      var rightchild = leftchild+1;
+      if (leftchild >= mergeset.length)
+        break;
+
+      if (rightchild == mergeset.length || mergeset[leftchild].value >= mergeset[rightchild].value)
+      {
+        if (mergeset[leftchild].value > mergeset[index].value)
+        {
+          tmpswap(commandlist, mergeset, leftchild, index)
+          index = leftchild;
+        }
+        else
+          break;
+      }
+      else if (mergeset[rightchild].value > mergeset[index].value)
+      {
+        tmpswap(commandlist, mergeset, rightchild, index)
+        index = rightchild;
+      }
+      else
+        break;
+    }
+
+    commandlist.push(new Command(false, index, "default"));
+  }
+
+  // Now remove each element from the root of the heap and put it at the end of the array,
+  // and percolate down.
+
+  for (var i = mergeset.length - 1; i >= 0; i--)
+  {
+    tmpswap(commandlist, mergeset, i, 0)
+    commandlist.push(new Command(false, i, "finished"));
+    var index = 0;
+    while(true)
+    {      
+      var leftchild = index*2+1;
+      var rightchild = leftchild+1;
+      if (leftchild >= i)
+        break;
+      else if (rightchild == i || mergeset[leftchild].value >= mergeset[rightchild].value)
+      {
+        if (mergeset[leftchild].value > mergeset[index].value)
+        {
+          tmpswap(commandlist, mergeset, leftchild, index)
+          index = leftchild;
+        }
+        else
+          break;
+      }
+      else if (mergeset[rightchild].value > mergeset[index].value)
+      {
+        tmpswap(commandlist, mergeset, rightchild, index)
+        index = rightchild;
+      }
+      else
+        break;
+    }
+  }
 }
 
 function swap(i, j)
