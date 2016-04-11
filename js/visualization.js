@@ -349,75 +349,134 @@ function recursive_sort(command_list, quickset, start, size)
   command_list.push(new Command(false, pivotIndex, "finished"));
 }
 
+//commandlist.push(new Command(false, leftchild, "default"));
 function sort_heap(commandlist, mergeset)
 {
   // Turn into a heap where the root is the maximum element 
+//states = {"default": 0, "finished": 1, "current": 2, "compare": 3, "minimal": 4, "hide": 5, "pivot": 6, "left": 7, "right": 8},
   for (var i = ((mergeset.length / 2) | 0); i >= 0; i--)
   {
     var index = i;
-    commandlist.push(new Command(false, index, "pivot"));
-    while(true)
-    {      
+    var okay = true;
+    while(okay)
+    {
+      if(index == i) 
+        commandlist.push(new Command(false, index, "pivot"));
       var leftchild = index*2+1;
       var rightchild = leftchild+1;
+
       if (leftchild >= mergeset.length)
+      {
+        commandlist.push(new Command(false, index, "default"));
         break;
+      }
+
+      commandlist.push(new Command(false, leftchild, "left"));
+      if(rightchild != mergeset.length)
+        commandlist.push(new Command(false, rightchild, "right"));
 
       if (rightchild == mergeset.length || mergeset[leftchild].value >= mergeset[rightchild].value)
       {
+        //left child bigger than parent swap
         if (mergeset[leftchild].value > mergeset[index].value)
         {
+          commandlist.push(new Command(false, leftchild, "compare"));
           tmpswap(commandlist, mergeset, leftchild, index)
+          commandlist.push(new Command(false, index, "default"));
           index = leftchild;
+          commandlist.push(new Command(false, leftchild, "pivot"));
         }
         else
-          break;
+        {
+          commandlist.push(new Command(false, index, "default"));
+          okay = false;
+        }
       }
       else if (mergeset[rightchild].value > mergeset[index].value)
       {
+        commandlist.push(new Command(false, rightchild, "compare"));
         tmpswap(commandlist, mergeset, rightchild, index)
+        commandlist.push(new Command(false, index, "default"));
         index = rightchild;
+        commandlist.push(new Command(false, rightchild, "pivot"));
       }
       else
-        break;
-    }
+      {
+        commandlist.push(new Command(false, index, "default"));
+        okay = false;
+      }
 
-    commandlist.push(new Command(false, index, "default"));
+      if(index != leftchild)
+        commandlist.push(new Command(false, leftchild, "default"));
+      if(rightchild != mergeset.length && index != rightchild)
+        commandlist.push(new Command(false, rightchild, "default"));
+    }
   }
 
   // Now remove each element from the root of the heap and put it at the end of the array,
   // and percolate down.
 
-  for (var i = mergeset.length - 1; i >= 0; i--)
+  for (var i = mergeset.length - 1; i > 0; i--)
   {
+    commandlist.push(new Command(false, 0, "current"));
     tmpswap(commandlist, mergeset, i, 0)
     commandlist.push(new Command(false, i, "finished"));
     var index = 0;
-    while(true)
-    {      
+    var okay = true;
+    while(okay)
+    {
+      if(index == 0)
+        commandlist.push(new Command(false, index, "pivot"));
       var leftchild = index*2+1;
       var rightchild = leftchild+1;
       if (leftchild >= i)
+      {
+        commandlist.push(new Command(false, index, "default"));
         break;
-      else if (rightchild == i || mergeset[leftchild].value >= mergeset[rightchild].value)
+      }
+
+      commandlist.push(new Command(false, leftchild, "left"));
+      if(rightchild != i)
+        commandlist.push(new Command(false, rightchild, "right"));
+
+      if (rightchild == i || mergeset[leftchild].value >= mergeset[rightchild].value)
       {
         if (mergeset[leftchild].value > mergeset[index].value)
         {
+          commandlist.push(new Command(false, leftchild, "compare"));
           tmpswap(commandlist, mergeset, leftchild, index)
+          commandlist.push(new Command(false, index, "default"));
           index = leftchild;
+          commandlist.push(new Command(false, leftchild, "pivot"));
         }
         else
-          break;
+        {
+          commandlist.push(new Command(false, index, "default"));
+          okay = false;
+        }
       }
       else if (mergeset[rightchild].value > mergeset[index].value)
       {
+
+        commandlist.push(new Command(false, rightchild, "compare"));
         tmpswap(commandlist, mergeset, rightchild, index)
+        commandlist.push(new Command(false, index, "default"));
         index = rightchild;
+        commandlist.push(new Command(false, rightchild, "pivot"));
       }
       else
-        break;
+      {
+        commandlist.push(new Command(false, index, "default"));
+        okay = false;
+      }
+
+      if(index != leftchild)
+        commandlist.push(new Command(false, leftchild, "default"));
+      if(rightchild != i && index != rightchild)
+        commandlist.push(new Command(false, rightchild, "default"));
     }
   }
+  commandlist.push(new Command(false, 0, "finished"));
 }
 
 function swap(i, j)
