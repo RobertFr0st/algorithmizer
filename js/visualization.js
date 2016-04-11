@@ -24,32 +24,31 @@ setRects(dataset);
 //generic definition
 var sorts = {};
 
-sorts.insertion = function() {
-  var i = 0, j = 0, was_swapped = false;
+sorts.insertion = function()
+{
+  var insertionset = dataset.slice(0);
+  var command_list = [];
+  insertion_sort(command_list, insertionset);
+  parse_commands(command_list);
 
-  timer = setInterval(function() {
-    if (j == 0 || !was_swapped) {
-      dataset[j].state = states.finished;
-      i++;
-      j = i;
-      was_swapped = true;
-      dataset[i].state = states.current;
-      if (i == dataset.length) {          // done sorting, break from the loop
-        dataset[dataset.length - 1].state = states.finished;
-        clearInterval(timer);
-      }
-    } else {
-      was_swapped = false;
-      if (dataset[j].value < dataset[j - 1].value) {
-        swap(j, j - 1);
-        was_swapped = true;
-      }
-      dataset[j - 1].state = states.compare;
-      dataset[j].state = states.finished;
-      j--;
+}
+
+function insertion_sort(command_list, insertionset)
+{
+  for (var i = 1; i < insertionset.length; i++) {
+    for (var j = i; j >= 1 && insertionset[j].value < insertionset[j-1].value; j--) {
+      
+      command_list.push(new Command(false, j, "compare"));
+      command_list.push(new Command(false, j-1, "compare"));
+      tmpswap(command_list, insertionset, j-1, j);
+      
+      command_list.push(new Command(false, j-1, "default"));
+      command_list.push(new Command(false, j, "default"));
     }
-    redrawRects(dataset);
-  }, speed);
+  }
+
+  for(var i = insertionset.length -1; i >= 0; i--)
+    command_list.push(new Command(false, i, "finished"));
 }
 
 //selection implimentation
@@ -178,8 +177,6 @@ sorts.quick = function()
   recursive_sort(command_list, quickset, 0, quickset.length);
   parse_commands(command_list);
 }
-
-//incrimentally find values that are in the wrong position in relation to the pivot
 
 //command_list.push(new Command(false, rightIndex, "right"));
 function incrimentLeft(command_list, quickset, index, pivot, maxIndex)
