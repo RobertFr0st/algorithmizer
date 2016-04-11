@@ -180,7 +180,6 @@ sorts.quick = function()
 
 //incrimentally find values that are in the wrong position in relation to the pivot
 
-//command_list.push(new Command(false, rightIndex, "right"));
 function incrimentLeft(command_list, quickset, index, pivot, maxIndex)
 {
   for(var i = index; i <= maxIndex; i++)
