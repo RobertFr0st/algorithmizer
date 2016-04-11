@@ -1,7 +1,6 @@
 // custom variables
 var w = 500, h = 190,
     element_count = 15, speed = 50,
-    implimentation = "insertion",
     dataset, scale, padding = 2, timer,
     states = {"default": 0, "finished": 1, "current": 2, "compare": 3, "minimal": 4, "hide": 5, "pivot": 6, "left": 7, "right": 8},
     colors = ["#B7C4CF", "#3565A1", "#D55511", "#74A82A", "#A42F11", "#fff", "#0f6727", "#14b8e4", "#e3361e"],
@@ -499,12 +498,6 @@ function redrawRects(set) {
     });
 }
 
-//choice logic, will be removed since we have 1 implimentation per page
-document.getElementById("implimentation").addEventListener("change", function() {
-    implimentation = this.value;
-    console.log(implimentation);
-});
-
 //reset button
 document.getElementById("reset").addEventListener("click", function() {
   //interrupt previous play
@@ -527,5 +520,6 @@ document.getElementById("play").addEventListener("click", function() {
   for (var i = dataset.length - 1; i >= 0; i--)
     dataset[i].state = states.default;
 
+  var implimentation = $("#graph").parent().attr("id");
   sorts[implimentation]();
 });
