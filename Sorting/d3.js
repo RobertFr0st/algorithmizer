@@ -1,3 +1,8 @@
+
+d3.select("#Enter").on('click', function(){
+  var data = getElementById('aData');
+  console.log(data);
+})
 var bardata = [9,7,2,1,14,3,7,13,6,7,8,9,3,12,30,25,1];
 var SColors=['#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff',
 '#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff'];
@@ -47,7 +52,8 @@ colors.push(SColors.slice(0));
 messages.push(M);
 var tempColor = [];
 var c = ['#6699ff','purple','pink', 'gold','yellow', 'orange', 'blue', 'teal']
-var end = ["#DDA0DD", "#BA55D3"];
+var end = [["#FF00FF", "#990099"],["#DDA0DD", "#BA55D3"],["#6600cc","#e6ccff"],["#00ffcc","#00997a"],
+["#6699ff","#1a66ff"],["#666699","#b3b3cc"]];
 var compare = ["#ADFF2F","green"];
 var sorted = ['#87CEFA','#6495ED','#00BFFF', '#1E90FF', '#00CED1','#7FFFD4','#20B2AA']
 var partition = [ '#ff6633','#ffcc33' ,'#ff99cc','#FFA07A','#ccff33','#cc6699','#BDB76B']
@@ -57,6 +63,13 @@ function merge(v, start, size, lvl){
   var i, size1, size2, start2, l, r, the_end;
 
   if (size == 1) {
+/*
+  states.push(v.slice(0));
+  messages.push("Partition lvl: ".concat(String(lvl), " - one element - return"));
+  tempColor = colors[colors.length -1].slice(0);
+  tempColor[start] = sorted[sorted.length - lvl];
+  colors.push(tempColor.slice(0));
+*/
     return;
   }
 
@@ -78,10 +91,10 @@ function merge(v, start, size, lvl){
  
  //save state after we call it
     states.push(v.slice(0));
-    messages.push("Partition lvl: ".concat(String(lvl), "is done here on a right"));
+    messages.push("Partition lvl: ".concat(String(lvl), " (left) is done, return"));
     tempColor = colors[colors.length -1].slice(0);
     for (var i = start; i < start+size1; i++){
-    tempColor[i] = end[0];
+    tempColor[i] = end[lvl][0];
   } 
     colors.push(tempColor.slice(0));
 
@@ -101,25 +114,30 @@ function merge(v, start, size, lvl){
 //save state after it returns
 
  states.push(v.slice(0));
-    messages.push("Partition lvl: ".concat(String(lvl), " is done here on a left"));
+    messages.push("Partition lvl: ".concat(String(lvl), " (right) is done,return"));
     tempColor = colors[colors.length -1].slice(0);
     for (var i = start2; i < start2+size2; i++){
-    tempColor[i] = end[1];
+    tempColor[i] = end[lvl][1];
   } 
     colors.push(tempColor.slice(0));
 
-var tempElem;
+var tempElem,tmp1,tmp2;
   //merging 2 vectors
   i = start;
   l = start; r = start2; the_end = start+size;
-  while (i < the_end){
+  while (1){
 
   //add state for each comparison
   
   states.push(v.slice(0));
   tempColor = colors[colors.length -1].slice(0);
-  tempColor[l] = compare[0];
+  if (l != r ){
+   tmp1 = tempColor[l];
+  tempColor[l] = compare[0];}
+  if (r != the_end){
+    tmp2 = tempColor[r];
   tempColor[r] = compare[1];
+  }
   colors.push(tempColor.slice(0));
 
     //no left to copy
@@ -131,39 +149,42 @@ var tempElem;
     for (x = l; x < start+size; x++){ tempColor[x] = sorted[lvl]; }
     colors.push(tempColor.slice(0));
     messages.push("Merging: this part is sorted");
-
+      break;
     }else if( r == the_end){
     messages.push("Merging: no right elemnts left, copy left elements over to sorted part"); 
 
     states.push(v.slice(0));
     tempColor = colors[colors.length -1].slice(0);
-    for (x in tempColor){ tempColor[x] = sorted[lvl]; }
+    for (x = l; x < start+size; x++ ){ tempColor[x] = sorted[lvl]; }
     colors.push(tempColor.slice(0));
     messages.push("Merging: this part is sorted");
+      break;
+    }else if (parseInt(v[l]) < parseInt(v[r])){
+    messages.push("Compare 1st elemnts of merging parts: ".concat(String(v[l])," < ",String(v[r]))); 
 
-    }else if (v[l] < v[r]){
-    messages.push("Compare 1st elemnts of merging parts: ".concat(String(v[l])," < ",String(v[r]), " move ",String(v[l])," over to sorted part")); 
-
-    states.push(v.slice(0));
-    tempColor = colors[colors.length -1].slice(0);
+    tempColor = colors[colors.length - 1].slice(0);
     tempColor[l] = sorted[lvl];
+    tempColor[r] = tmp2;
     l = l + 1;
-    colors.push(tempColor.slice(0));
-    messages.push("Merging: Left starts at element ".concat(String(l)));
-    
-    }else{
-    messages.push("Compare 1st elements of merging parts: ".concat(String(v[r])," <= ",String(v[l]), " move ",String(v[r])," over to sorted part"));
-    
     states.push(v.slice(0));
+    colors.push(tempColor.slice(0));
+    messages.push("Merging: ".concat("move ",String(v[l - 1])," over to sorted part"));
+    
+    }else {
+    messages.push("Compare 1st elements of merging parts: ".concat(String(v[r])," <= ",
+      String(v[l])));
+    
     tempColor = colors[colors.length -1].slice(0);
+    tempColor[r] = tmp1;
     tempColor[l] = sorted[lvl];
     l = l + 1;
     r = r + 1;
     tempElem = v.splice(r-1,1);
     v.splice(l-1,0, tempElem);
+    states.push(v.slice(0));
 
     colors.push(tempColor.slice(0));
-    messages.push("Merging: Right starts at element ".concat(String(r)));   
+    messages.push("Merging: ".concat("move ",String(v[l-1])," over to sorted part"));   
     }
     
     i++;
@@ -171,12 +192,9 @@ var tempElem;
 }
 
 merge(bardata, 0, bardata.length, 1);
-
-for (x in states){
-  document.write(states[x] + "&nbsp &nbsp " + colors[x]+ "&nbsp &nbsp "+  messages[x]);
-  document.write("<br>");
-}
-
+colors.push(colors[colors.length -1].slice(0));
+states.push(states[states.length - 1]);
+messages.push("Vector is sorted!");
 //---------------------------
 var step = -1;
 

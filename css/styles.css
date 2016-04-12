@@ -76,8 +76,47 @@ input {
 	box-sizing: border-box;
 	width: 600px;
 }
-#footer {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
+.highlight {
+		
+		color: #c64c6f;
+		font-weight: 600;	
+}
+.item {
+	padding-left: 30px;
+}
+
+.bigger {
+	font-size:150%;	
+}
+
+#message{
+	border: 2px solid #C3C6BF;
+	padding: 20px;
+	width: 70%;
+	height: 100px;
+	margin: auto;
+	font-family: 'Roboto Slab';
+	font-size: 160%;
+}
+
+#chart{
+	width: 70%;
+	margin:auto;
+}
+.buttons{
+	 margin:auto;
+	 text-align:center;
+	 padding: 20px; 
+}
+.DataInput {
+	margin-top: auto;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: auto;
+	padding: 20px;
+	width: 70%;
+	color: rgba(4,4,4,1.00);
+}
+.ArrayData{
+	min-width: 300px;
 }
