@@ -16,6 +16,7 @@
 	border: 2px solid #73AD21;
     padding: 20px; 
     width: 70%;
+    height: 200px;
     margin:auto;
     font-family: 'Roboto Slab';
     font-size: 160%;
@@ -24,6 +25,11 @@
 #chart{
 	width: 70%;
 	margin:auto;
+}
+.buttons{
+	 margin:auto;
+	 text-align:center;
+	 padding: 20px; 
 }
 
 
