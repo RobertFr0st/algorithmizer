@@ -1,7 +1,6 @@
 // custom variables
 var w = 500, h = 190,
     element_count = 15, speed = 50,
-    implimentation = "insertion",
     dataset, scale, padding = 2, timer,
     states = {"default": 0, "finished": 1, "current": 2, "compare": 3, "minimal": 4, "hide": 5, "pivot": 6, "left": 7, "right": 8},
     colors = ["#B7C4CF", "#3565A1", "#D55511", "#74A82A", "#A42F11", "#fff", "#0f6727", "#14b8e4", "#e3361e"],
@@ -24,32 +23,31 @@ setRects(dataset);
 //generic definition
 var sorts = {};
 
-sorts.insertion = function() {
-  var i = 0, j = 0, was_swapped = false;
+sorts.insertion = function()
+{
+  var insertionset = dataset.slice(0);
+  var command_list = [];
+  insertion_sort(command_list, insertionset);
+  parse_commands(command_list);
 
-  timer = setInterval(function() {
-    if (j == 0 || !was_swapped) {
-      dataset[j].state = states.finished;
-      i++;
-      j = i;
-      was_swapped = true;
-      dataset[i].state = states.current;
-      if (i == dataset.length) {          // done sorting, break from the loop
-        dataset[dataset.length - 1].state = states.finished;
-        clearInterval(timer);
-      }
-    } else {
-      was_swapped = false;
-      if (dataset[j].value < dataset[j - 1].value) {
-        swap(j, j - 1);
-        was_swapped = true;
-      }
-      dataset[j - 1].state = states.compare;
-      dataset[j].state = states.finished;
-      j--;
+}
+
+function insertion_sort(command_list, insertionset)
+{
+  for (var i = 1; i < insertionset.length; i++) {
+    for (var j = i; j >= 1 && insertionset[j].value < insertionset[j-1].value; j--) {
+      
+      command_list.push(new Command(false, j, "compare"));
+      command_list.push(new Command(false, j-1, "compare"));
+      tmpswap(command_list, insertionset, j-1, j);
+      
+      command_list.push(new Command(false, j-1, "default"));
+      command_list.push(new Command(false, j, "default"));
     }
-    redrawRects(dataset);
-  }, speed);
+  }
+
+  for(var i = insertionset.length -1; i >= 0; i--)
+    command_list.push(new Command(false, i, "finished"));
 }
 
 //selection implimentation
@@ -84,31 +82,15 @@ sorts.bubble = function()
       //current element is new minimum 
       if (dataset[j+1].value < dataset[j].value)
       {
-      //set current element to being compared 
-        //perform the swap
         doswap = true;
-	//	dataset[j+1].state = states.default;
-		//swap(j, j+1);
-		//dataset[j-1].state = states.default;
-      //move on to next element in the array
       }
-	 //j++;
-      //reset last checked element to default
-      //dataset[j].state = states.default;
 
+	j++;
     } else {
 	  dataset[j].state = states.finished;
       unsort_length = unsort_length - 1;
       j=0;
     }
-    //if (doswap === true){
-	//	swap(j, j+1);
-	//	doswap = false;
-	//}else{
-	   //dataset[j+1].state = states.default;
-	   //dataset[j].state = states.default;
-	//}
-	j++;
 	}
     redrawRects(dataset);
   }, speed);
@@ -187,6 +169,14 @@ sorts.selection = function()
   }, speed);
 }
 
+sorts.heap = function()
+{
+  var heapset = dataset.slice(0);
+  var command_list = [];
+  sort_heap(command_list, heapset);
+  parse_commands(command_list);
+}
+
 sorts.quick = function()
 {
   var quickset = dataset.slice(0);
@@ -195,9 +185,6 @@ sorts.quick = function()
   parse_commands(command_list);
 }
 
-//incrimentally find values that are in the wrong position in relation to the pivot
-
-//command_list.push(new Command(false, rightIndex, "right"));
 function incrimentLeft(command_list, quickset, index, pivot, maxIndex)
 {
   for(var i = index; i <= maxIndex; i++)
@@ -359,6 +346,136 @@ function recursive_sort(command_list, quickset, start, size)
   command_list.push(new Command(false, pivotIndex, "finished"));
 }
 
+//commandlist.push(new Command(false, leftchild, "default"));
+function sort_heap(commandlist, mergeset)
+{
+  // Turn into a heap where the root is the maximum element 
+//states = {"default": 0, "finished": 1, "current": 2, "compare": 3, "minimal": 4, "hide": 5, "pivot": 6, "left": 7, "right": 8},
+  for (var i = ((mergeset.length / 2) | 0); i >= 0; i--)
+  {
+    var index = i;
+    var okay = true;
+    while(okay)
+    {
+      if(index == i) 
+        commandlist.push(new Command(false, index, "pivot"));
+      var leftchild = index*2+1;
+      var rightchild = leftchild+1;
+
+      if (leftchild >= mergeset.length)
+      {
+        commandlist.push(new Command(false, index, "default"));
+        break;
+      }
+
+      commandlist.push(new Command(false, leftchild, "left"));
+      if(rightchild != mergeset.length)
+        commandlist.push(new Command(false, rightchild, "right"));
+
+      if (rightchild == mergeset.length || mergeset[leftchild].value >= mergeset[rightchild].value)
+      {
+        //left child bigger than parent swap
+        if (mergeset[leftchild].value > mergeset[index].value)
+        {
+          commandlist.push(new Command(false, leftchild, "compare"));
+          tmpswap(commandlist, mergeset, leftchild, index)
+          commandlist.push(new Command(false, index, "default"));
+          index = leftchild;
+          commandlist.push(new Command(false, leftchild, "pivot"));
+        }
+        else
+        {
+          commandlist.push(new Command(false, index, "default"));
+          okay = false;
+        }
+      }
+      else if (mergeset[rightchild].value > mergeset[index].value)
+      {
+        commandlist.push(new Command(false, rightchild, "compare"));
+        tmpswap(commandlist, mergeset, rightchild, index)
+        commandlist.push(new Command(false, index, "default"));
+        index = rightchild;
+        commandlist.push(new Command(false, rightchild, "pivot"));
+      }
+      else
+      {
+        commandlist.push(new Command(false, index, "default"));
+        okay = false;
+      }
+
+      if(index != leftchild)
+        commandlist.push(new Command(false, leftchild, "default"));
+      if(rightchild != mergeset.length && index != rightchild)
+        commandlist.push(new Command(false, rightchild, "default"));
+    }
+  }
+
+  // Now remove each element from the root of the heap and put it at the end of the array,
+  // and percolate down.
+
+  for (var i = mergeset.length - 1; i > 0; i--)
+  {
+    commandlist.push(new Command(false, 0, "current"));
+    tmpswap(commandlist, mergeset, i, 0)
+    commandlist.push(new Command(false, i, "finished"));
+    var index = 0;
+    var okay = true;
+    while(okay)
+    {
+      if(index == 0)
+        commandlist.push(new Command(false, index, "pivot"));
+      var leftchild = index*2+1;
+      var rightchild = leftchild+1;
+      if (leftchild >= i)
+      {
+        commandlist.push(new Command(false, index, "default"));
+        break;
+      }
+
+      commandlist.push(new Command(false, leftchild, "left"));
+      if(rightchild != i)
+        commandlist.push(new Command(false, rightchild, "right"));
+
+      if (rightchild == i || mergeset[leftchild].value >= mergeset[rightchild].value)
+      {
+        if (mergeset[leftchild].value > mergeset[index].value)
+        {
+          commandlist.push(new Command(false, leftchild, "compare"));
+          tmpswap(commandlist, mergeset, leftchild, index)
+          commandlist.push(new Command(false, index, "default"));
+          index = leftchild;
+          commandlist.push(new Command(false, leftchild, "pivot"));
+        }
+        else
+        {
+          commandlist.push(new Command(false, index, "default"));
+          okay = false;
+        }
+      }
+      else if (mergeset[rightchild].value > mergeset[index].value)
+      {
+
+        commandlist.push(new Command(false, rightchild, "compare"));
+        tmpswap(commandlist, mergeset, rightchild, index)
+        commandlist.push(new Command(false, index, "default"));
+        index = rightchild;
+        commandlist.push(new Command(false, rightchild, "pivot"));
+      }
+      else
+      {
+        commandlist.push(new Command(false, index, "default"));
+        okay = false;
+      }
+
+      if(index != leftchild)
+        commandlist.push(new Command(false, leftchild, "default"));
+      if(rightchild != i && index != rightchild)
+        commandlist.push(new Command(false, rightchild, "default"));
+    }
+  }
+  commandlist.push(new Command(false, 0, "finished"));
+}
+
 function swap(i, j)
 {
   var tmp = dataset[i];
@@ -515,12 +632,6 @@ function redrawRects(set) {
     });
 }
 
-//choice logic, will be removed since we have 1 implimentation per page
-document.getElementById("implimentation").addEventListener("change", function() {
-    implimentation = this.value;
-    console.log(implimentation);
-});
-
 //reset button
 document.getElementById("reset").addEventListener("click", function() {
   //interrupt previous play
@@ -543,5 +654,6 @@ document.getElementById("play").addEventListener("click", function() {
   for (var i = dataset.length - 1; i >= 0; i--)
     dataset[i].state = states.default;
 
+  var implimentation = $("#graph").parent().attr("id");
   sorts[implimentation]();
 });
