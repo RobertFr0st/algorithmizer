@@ -1,33 +1,39 @@
 
-d3.select("#Enter").on('click', function(){
-  var data = document.getElementById('aData');
-  //document.write(data);
-})
-//document.write(data);
-var bardata = [9,7,2,1,14,3,7,13,6,7,8,9,3,12,30,25,1];
-var SColors=['#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff',
-'#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff'];
+var bd=[],bardata=[], SColors=[];
+var data;
+  
+data = document.getElementById("ArrayData").value; 
+bd = data.split(",");
+for (var i = 0; i < bd.length;i++){
+  bardata.push(parseInt(bd[i]))
+  SColors.push('#7a99b8');
+}
+
+//bardata = [9,7,2,1,14,3,7,13,6,7,8,9,3,12,30,25,1];
+//SColors=['#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff',
+//'#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff'];
 var height = 400,
-    width = 600,
+    width = 1000,
     barWidth = 50,
     barOffset = 5;
-
 var yScale = d3.scale.linear()
   .domain([0, d3.max(bardata)])
   .range([0, height])
-
 var xScale = d3.scale.ordinal()
   .domain(d3.range(0,bardata.length))
   .rangeBands([0,width])
+//document.write(bardata);
 
-d3.select('#chart').append('svg')
+d3.select("#Enter").on('click', function(){
+  d3.select("#message").text("Hit 'Next' button to start");
+ d3.select('#chart').append('svg')
   .attr('width', width)
   .attr('height', height)
   .append('g') 
     .selectAll('rect').data(bardata)
     .enter().append('rect').attr('class', 'bars')
       .style('fill', function(d,i){
-      return SColors[i];
+      return "white";
          })
       .attr('width', xScale.rangeBand()-1)
       .attr('height', function(d) {
@@ -38,7 +44,8 @@ d3.select('#chart').append('svg')
         })
       .attr('y', function(d){
       return (height - yScale(d));
-        })
+        })     
+});
 
 //------------------------
 var M = "Your vector is: ".concat(String(bardata));
@@ -226,6 +233,5 @@ d3.select("#prev").on('click', function(){
     d3.select("#message").text(messages[step])
     
 })
-
 
 
