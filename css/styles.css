@@ -98,7 +98,7 @@ input {
 .buttons{
 	 margin:auto;
 	 text-align:center;
-	 padding: 20px; 
+	 padding-bottom: 20px; 
 }
 .DataInput {
 	margin-top: auto;
@@ -110,5 +110,5 @@ input {
 	color: rgba(4,4,4,1.00);
 }
 #ArrayData{
-	min-width: 300px;
+	min-width: 500px;
 }

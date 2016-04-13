@@ -9,9 +9,6 @@ for (var i = 0; i < bd.length;i++){
   SColors.push('#7a99b8');
 }
 
-//bardata = [9,7,2,1,14,3,7,13,6,7,8,9,3,12,30,25,1];
-//SColors=['#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff',
-//'#6699ff','#6699ff','#6699ff','#6699ff','#6699ff','#6699ff'];
 var height = 400,
     width = 1000,
     barWidth = 50,
@@ -22,10 +19,10 @@ var yScale = d3.scale.linear()
 var xScale = d3.scale.ordinal()
   .domain(d3.range(0,bardata.length))
   .rangeBands([0,width])
-//document.write(bardata);
+
 
 d3.select("#Enter").on('click', function(){
-  d3.select("#message").text("Hit 'Next' button to start");
+
  d3.select('#chart').append('svg')
   .attr('width', width)
   .attr('height', height)
@@ -33,7 +30,7 @@ d3.select("#Enter").on('click', function(){
     .selectAll('rect').data(bardata)
     .enter().append('rect').attr('class', 'bars')
       .style('fill', function(d,i){
-      return "white";
+      return SColors[i];
          })
       .attr('width', xScale.rangeBand()-1)
       .attr('height', function(d) {
