@@ -9,8 +9,6 @@
 <!-- Bootstrap -->
 <link href="../css/bootstrap.css" rel="stylesheet">
 <link href="../css/styles.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="base.css">
-<link rel="stylesheet" href="style.css">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -59,11 +57,17 @@
 
 <article id="main"><p class="intro"> a simple comparison-based algorithm that is based on sorting a vector one element at the time, and maintaining the sorted part of the vector while finding the location for next element in that sorted part </p></article>
 <div class="container"></p>
+<div class = "DataInput">
+<label  id = "Data" for="ArrayData" >Enter Your Data:</label>
 
-<p id = "message"> Enter your data: </p>
+  <input id = "ArrayData" name="textfield" type="text" >
+  <button id="Enter"> Enter </button>
+  </div>
+<p id = "message"> </p>
+  <div class = "buttons">
+    <button id="prev"> Previous</button>
   <button id="next"> Next</button>
-  <button id="prev"> Previous</button>
-  
+</div>
      <div id="chart">  </div>
 
 </div>
@@ -75,8 +79,7 @@
 
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
 <script src="../js/bootstrap.js"></script>
-<script src="../js/visualization.js"></script>
 <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="d3.js"></script>
+    <script src="../js/MergeSortViz.js"></script>
 </body>
 </html>

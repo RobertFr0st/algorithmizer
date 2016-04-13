@@ -129,8 +129,10 @@ button,
 html input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-  -webkit-appearance: button;
-  cursor: pointer;
+	-webkit-appearance: button;
+	cursor: pointer;
+	color: rgba(20,16,16,1.00);
+	background-color: rgba(212,196,197,1.00);
 }
 button[disabled],
 html input[disabled] {
