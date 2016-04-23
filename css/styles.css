@@ -15,15 +15,6 @@ h1, h3, p {
 	margin-top: 60px;
 	margin-bottom: 60px;
 }
-footer {
-	margin-top: 60px;
-	padding-top: 18px;
-	padding-bottom: 18px;
-	background-color: #857F7F;
-	color: #ffffff;
-	text-align: center;
-	bottom: 0px;
-}
 .navbar.navbar-default {
 	border-right-width: 0px;
 	border-radius: 0px;
@@ -76,8 +67,48 @@ input {
 	box-sizing: border-box;
 	width: 600px;
 }
-#footer {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
+.highlight {
+		
+		color: #c64c6f;
+		font-weight: 600;	
+}
+.item {
+	padding-left: 30px;
+}
+
+.bigger {
+	font-size:150%;	
+}
+
+#message{
+	border: 0px solid #C3C6BF;
+	padding: 20px;
+	width: 70%;
+	height: 100px;
+	margin: auto;
+	font-family: 'Roboto Slab';
+	font-size: 160%;
+}
+
+#chart{
+	width: 70%;
+	margin:auto;
+	margin-bottom: 100px
+}
+.buttons{
+	 margin:auto;
+	 text-align:center;
+	 padding-bottom: 20px; 
+}
+.DataInput {
+	margin-top: auto;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: auto;
+	padding: 20px;
+	width: 70%;
+	color: rgba(4,4,4,1.00);
+}
+#ArrayData{
+	min-width: 500px;
 }
