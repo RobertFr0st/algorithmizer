@@ -50,50 +50,65 @@ function insertion_sort(command_list, insertionset)
     command_list.push(new Command(false, i, "finished"));
 }
 
-//selection implimentation
+//bubble implimentation
+
 sorts.bubble = function()
 {
-  var j, isInner, unsort_length;
-  j = 0; doswap = false; swapped = false;
-  unsort_length = dataset.length
-  timer = setInterval(function()
-  {
-	if (swapped == true) swapped =false;
-	if (j > 0){
-	   dataset[j-1].state = states.default;
-	   dataset[j].state = states.default;
-		if (doswap === true){
-			swap(j, j-1);
-			doswap = false;
-			swapped = true;
+	var j, isInner, unsort_length, count = -1;
+	j = 0, doswap = false, swapped = false;
+	unsort_length = dataset.length;
+	timer = setInterval(function()
+	{
+		if (doswap == true && count == 0)
+		{
+			dataset[j-1].state = states.compare;
+			dataset[j].state = states.compare;
+			count = 1;
 		}
-	}
-    if (unsort_length-1 == 0)
-    {
-      clearInterval(timer);
-    }
-	if (swapped == false){
-    if (j < unsort_length-1){
-      //set this as element to swap with
-      dataset[j].state = states.current;
-      dataset[j+1].state = states.compare;
+		if (swapped == true) swapped =false;
+		if (doswap === true && count == 2){
+				swap(j, j-1);
+				doswap = false;
+				swapped = true;
+				dataset[j-1].state = states.default;
+				dataset[j].state = states.default;
+				count = 3;
+		}else if (doswap == true){
+			count = 2; 
+		}
+		if (unsort_length-1 == 0)
+		{
+			clearInterval(timer);
+		}
+		if (swapped == false && count < 1){
+			if (j < unsort_length-1){
+				//set this as element to swap with
+				dataset[j].state = states.current;
+				dataset[j+1].state = states.left;
+				//current element is new minimum 
+				if (dataset[j+1].value < dataset[j].value)
+				{
+					doswap = true;
+					count = 0;
+				}else {
+					count = 5;
+				}
 
-
-      //current element is new minimum 
-      if (dataset[j+1].value < dataset[j].value)
-      {
-        doswap = true;
-      }
-
-	j++;
-    } else {
-	  dataset[j].state = states.finished;
-      unsort_length = unsort_length - 1;
-      j=0;
-    }
-	}
-    redrawRects(dataset);
-  }, speed);
+				j++;
+			} else{
+				dataset[j].state = states.finished;
+				unsort_length = unsort_length - 1;
+				j=0;
+			}
+		} else if (count == 3){
+			count = -1;
+		} else if (count == 5){
+			count = -1;
+			dataset[j-1].state = states.default;
+			dataset[j].state = states.default;
+		}
+		redrawRects(dataset);
+	}, speed);
 }
 
 //todo: put length input on slider so bad input is not possible
