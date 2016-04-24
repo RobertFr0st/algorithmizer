@@ -50,7 +50,7 @@ function insertion_sort(command_list, insertionset)
     command_list.push(new Command(false, i, "finished"));
 }
 
-//selection implimentation
+//bubble implimentation
 
 sorts.bubble = function()
 {
