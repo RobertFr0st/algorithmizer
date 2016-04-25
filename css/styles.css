@@ -56,9 +56,7 @@ h1, h3, p {
     padding: 0.5em;
 }
 
-input {
-    width: 3em;
-}
+
 .algorithm {
 	font-size: large;
 	color: #000000;
@@ -90,11 +88,6 @@ input {
 	font-size: 160%;
 }
 
-#chart{
-	width: 70%;
-	margin:auto;
-	margin-bottom: 100px
-}
 .buttons{
 	 margin:auto;
 	 text-align:center;
@@ -110,5 +103,39 @@ input {
 	color: rgba(4,4,4,1.00);
 }
 #ArrayData{
-	min-width: 500px;
+	min-width: 400px;
+}
+#Submit{
+     margin:auto;
+	 text-align:center;
+}
+input:focus {
+ background-color:#FFEFD5;
+ outline: none;}
+
+ #inp{
+	margin: auto;
+	padding-top: auto;
+	padding-left: auto;
+	padding-bottom: auto;
+	width: 60%;
+	align-content: center;
+	padding-right: auto;
+ }
+
+
+#ban{
+	width: 70%;
+	margin: auto;
+	padding: 20px;
+	margin-top: auto;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: auto;
+}
+.algoIn {
+	margin-bottom: 0px;
+	padding-top: 50px;
+	padding-bottom: 0px;
+	text-align: center;
 }

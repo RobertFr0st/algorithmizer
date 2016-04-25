@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+ <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.js"></script>
+
+
 <title>Algorithmizer</title>
 
 <!-- Bootstrap -->
@@ -18,6 +22,7 @@
     <![endif]-->
 </head>
 <body class="bg-primary">
+
 <div class="container-fluid" id="wrapper">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -34,14 +39,12 @@
           <li><a href="Contact.html">Contact</a></li>
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Algorithms<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="Selection.html">Selection Sort</a></li>
-              <li><a href="Insertion.html">Insertion Sort</a></li>
-              <li><a href="Merge.html">Merge Sort</a></li>
               <li><a href="Bubble.html">Bubble Sort</a></li>
-              <li><a href="Quick.html">Quick Sort</a></li>
                <li><a href="Heap.html">Heap Sort</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Brief Tutorial</a></li>
+               <li><a href="Insertion.html">Insertion Sort</a></li>
+               <li><a href="Merge.html">Merge Sort</a></li>
+               <li><a href="Quick.html">Quick Sort</a></li>
+               <li><a href="Selection.html">Selection Sort</a></li>
             </ul>
           </li>
         </ul>
@@ -53,33 +56,72 @@
 </div>
     <!-- /.container-fluid -->
 
-<img src="../images/merge sort banner.jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
+<div id="ban">
+<img  src="../images/merge sort banner.jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
+</div>
 
-<article id="main"><p class="intro"> a simple comparison-based algorithm that is based on sorting a vector one element at the time, and maintaining the sorted part of the vector while finding the location for next element in that sorted part </p></article>
-<div class="container"></p>
+
+
+
+<div class ="container algorithm" id="inp">
 <div class = "DataInput">
-<label  id = "Data" for="ArrayData" >Enter Your Data:</label>
 
-  <input id = "ArrayData" name="textfield" type="text" >
-  <button id="Enter"> Enter </button>
-  </div>
+
+<form name="myform" onSubmit="return handleClick()">
+            
+            <input type="text" id="ArrayData" placeholder="Add values, separate with 'comma SPACE'!!! &hellip;">
+            <input id = "Submit" name="Submit" type="submit" value="Enter" >
+</form>
+<!-- <label  id = "Data" for="ArrayData" >Enter Your Data:</label>
+
+  // <input id = "ArrayData" name="textfield" type="text" >
+  -->
+   <ul></ul>
+  </div> 
+
 <p id = "message"> </p>
   <div class = "buttons">
     <button id="prev"> Previous</button>
-  <button id="next"> Next</button>
+    <button id="next"> Next</button>
+    <button id="Enter"> Restart </button>
 </div>
-     <div id="chart">  </div>
+     <div><div id="chart">  </div></div>
+     
+     </div>
+<article id="main"><p class="intro"> Merge sort a simple comparison-based algorithm that is based on sorting a vector one element at the time, and maintaining the sorted part of the vector while finding the location for next element in that sorted part 
+Conceptually, a merge sort works as follows:<br><br>
 
+Divide the unsorted list into n sublists, each containing 1 element (a list of 1 element is considered sorted).<br>
+Repeatedly merge sublists to produce new sorted sublists until there is only 1 sublist remaining. This will be the sorted list.<br><br>
+The average case performance of merge sort is O(n log n)<br><br>
+The algorithm:<br><br>
+Graph will be partitioned on halves indicating what lvl of recursion it is doing<br>
+After it gets into the last lvl (where 1 element is left), merging  of halves starts <br>
+Light green color indicates first element of left half <br>
+Dark green indicates first element of right half <br>
+Algorithm is provided with step by step explanation<br><br>
+<i>There is an issue possible with visualization glitching due to incorrect data input.
+Javascript reads a string from input window and it separates it into array of ints. If spaces with commas are not placed correctly, wrong data may be generated. So we strongly encourage users to separate each value with comma and one space</i><br>
+
+
+
+</p></article>
+<div class="container">
 </div>
 
+
+<script>
+
+
+            </script> 
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 <script src="../js/jquery-1.11.3.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="../js/d3.min.js"></script>
 <script src="../js/bootstrap.js"></script>
-<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="../js/MergeSortViz.js"></script>
+<script src="../js/mergesortviz.js"></script>
 </body>
 </html>

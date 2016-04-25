@@ -34,14 +34,12 @@
           <li><a href="Contact.html">Contact</a></li>
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Algorithms<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="Selection.html">Selection Sort</a></li>
-              <li><a href="Insertion.html">Insertion Sort</a></li>
-              <li><a href="Merge.html">Merge Sort</a></li>
               <li><a href="Bubble.html">Bubble Sort</a></li>
-              <li><a href="Quick.html">Quick Sort</a></li>
                <li><a href="Heap.html">Heap Sort</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Brief Tutorial</a></li>
+               <li><a href="Insertion.html">Insertion Sort</a></li>
+               <li><a href="Merge.html">Merge Sort</a></li>
+               <li><a href="Quick.html">Quick Sort</a></li>
+               <li><a href="Selection.html">Selection Sort</a></li>
             </ul>
           </li>
         </ul>
@@ -52,22 +50,56 @@
   </nav>
 </div>
     <!-- /.container-fluid -->
-
+<div id="ban">
 <img  src="../images/bubble banner.jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
+</div>
 
-<article id="main"><p class="intro"> DESCRIPTION</p></article>
 <div class ="container algorithm" >
 
-    <button id="play">Play</button>
 
-    Speed: <input type="text" value="100" id="speed"> </input>ms
-    Length: <input type="text" value="15" id="element_count"></input>
 
+    <div class="algoIn" >
+
+    <label> Speed:</label> <input type="text" value="100" id="speed"> 
+    
+    <label>Length:</label> <input type="text" value="15" id="element_count">
+    </div>
+    <div class="algoIn">
+<button id="play">Play</button>
     <button id="reset">Reset</button>
+</div>
+
+
 
     <div id="bubble"><div id="graph"></div></div>
 </div>
 
+<article id="main"><p class="intro"> 
+Bubble Sort is a simple in-place sorting algorithm, with an O(n^2 ) time complexity on worst and average case (it is quite an inefficient algorithm when n is large).
+</p>
+<p class="intro">
+The general steps are very straight forward. The visualization operates as follows:
+We iterate through the array and compare each adjacent pair of elements at index i (orange) and j=i+1 (blue). If the value at i is less than the value at j, then both elements change to light green to indicate that they will be swapped, then we swap the elements.
+</p>
+
+<p class="intro">
+So we compare the values of the elements in index i=0 and j=1, and if the value at index i is greater than the value at index j, then we swap the two elements.
+Next we compare the values of the elements in index i=1 and j=2, and if the value at index i is greater than the value at index j, then we swap the two elements.
+</p>
+<p class="intro">It continues in this pattern until the largest element is swapped into the last element of the array (which begins the sorted portion of the array), and we continue this comparison process again on the unsorted portion of the array.</p>
+<p class ="intro">
+Bubble Sort gets its name because visually, the largest element appears to “bubble” up to the end of the array.<br>
+<b>Color meaning:</b><br>
+Orange = left element to compare<br>
+Light Blue = right element to compare<br>
+Green = Pair of elements to be swapped<br>
+Dark Blue = Element in final sorted position<br>
+
+</p>
+
+
+
+</article>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 <script src="../js/jquery-1.11.3.min.js"></script>
 
