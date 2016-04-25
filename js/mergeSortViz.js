@@ -1,60 +1,14 @@
 
-var bd=[],bardata=[], SColors=[];
+var bardata=[],bd=[], SColors=[];
 var data;
-  
-data = document.getElementById("ArrayData").value; 
-bd = data.split(",");
-for (var i = 0; i < bd.length;i++){
-  bardata.push(parseInt(bd[i]))
-  SColors.push('#7a99b8');
-}
-
-var height = 400,
-    width = 1000,
-    barWidth = 50,
-    barOffset = 5;
-var yScale = d3.scale.linear()
-  .domain([0, d3.max(bardata)])
-  .range([0, height])
-var xScale = d3.scale.ordinal()
-  .domain(d3.range(0,bardata.length))
-  .rangeBands([0,width])
-
-
-d3.select("#Enter").on('click', function(){
-
- d3.select('#chart').append('svg')
-  .attr('width', width)
-  .attr('height', height)
-  .append('g') 
-    .selectAll('rect').data(bardata)
-    .enter().append('rect').attr('class', 'bars')
-      .style('fill', function(d,i){
-      return SColors[i];
-         })
-      .attr('width', xScale.rangeBand()-1)
-      .attr('height', function(d) {
-      return yScale(d);
-         })
-      .attr('x', function(d,i){
-      return xScale(i);
-        })
-      .attr('y', function(d){
-      return (height - yScale(d));
-        })     
-});
-
-//------------------------
-var M = "Your vector is: ".concat(String(bardata));
-
+var i,number;
+var height,width ,barWidth ,barOffset;
+var yScale, xScale;
+var text_height;
+var M ;
 var states = []
 var colors = []
 var messages = []
-//document.write("here");
-states.push(bardata.slice(0));
-colors.push(SColors.slice(0));
-//document.write(String(colors));
-messages.push(M);
 var tempColor = [];
 //var c = ['#6699ff','purple','pink', 'gold','yellow', 'orange', 'blue', 'teal']
 var end = [["#FF00FF", "#990099"],["#DDA0DD", "#BA55D3"],["#6600cc","#e6ccff"],["#00ffcc","#00997a"],
@@ -62,6 +16,99 @@ var end = [["#FF00FF", "#990099"],["#DDA0DD", "#BA55D3"],["#6600cc","#e6ccff"],[
 var compare = ["#ADFF2F","green"];
 var sorted = ['#87CEFA','#6495ED','#00BFFF', '#1E90FF', '#00CED1','#7FFFD4','#20B2AA']
 var partition = [ '#ff6633','#ffcc33' ,'#ff99cc','#FFA07A','#ccff33','#cc6699','#BDB76B','#ffff33']
+var margin = {top:50, right:0, bottom:20, left:50}
+
+
+/*
+
+ */
+/*
+function handleClick(event){
+                //console.log(document.getElementById("myVal").value)
+                bd = (document.getElementById("myVal").value).split(",");
+                draw();
+                return false;
+            }*/
+
+d3.select("#Enter").on('click', update_begin);
+
+
+var dataset = [];
+ function handleClick(event){
+                console.log(document.getElementById("ArrayData").value)
+                draw(document.getElementById("ArrayData").value)
+                return false;
+            }
+ 
+            function draw(val){
+
+                bardata = val.split(",").map(Number);
+                for ( i =0; i<bardata.length;i++)
+                {
+
+                  SColors.push('#7a99b8');
+                }
+
+                //font size choosing logic
+              if(bardata.length > 50) text_height = "0"
+              else if(bardata.length > 35) text_height = "8"
+              else if(bardata.length > 25) text_height = "12"
+              else text_height = "18"
+ 
+                height = 400,
+                width = 700,
+                barWidth = 50,
+                barOffset = 5;
+                yScale = d3.scale.linear()
+                    .domain([0, d3.max(bardata)])
+                    .range([0, height])
+                xScale = d3.scale.ordinal()
+                    .domain(d3.range(0,bardata.length))
+                    .rangeBands([0,width])
+             
+                d3.select('#chart').select('svg').remove();
+  
+                   d3.select('#chart').append('svg')
+                    .attr('width', width)
+                    .attr('height', height)
+                    .append('g')
+                      .selectAll('rect').data(bardata)
+                       .enter().append('rect').attr('class', 'bars')
+                        .style('fill', function(d,i){
+                          return SColors[i];
+                          })
+                          .attr('width', xScale.rangeBand()-1)
+                          .attr('height', function(d) {
+                            return yScale(d);
+                             })
+                          .attr('x', function(d,i){
+                            return xScale(i);
+                            })
+                          .attr('y', function(d){
+                            return (height - yScale(d));
+                             })
+                    d3.select('svg')
+                      .selectAll("text")
+                      .data(bardata)
+                      .enter()
+                      .append("text")
+                      .attr("class", "textlabel")
+                      .attr("x", function(d,i){ return xScale(i) + xScale.rangeBand()/2 ; })
+                      .attr("y", function(d){ return height - yScale(d) + 15; })
+                      .text(function(d){ return d; })
+                      .attr("fill", "black")
+                      .attr("text-anchor", "middle")
+                      .attr("font-size", text_height)
+                  
+//------------------------
+M = "Your vector is: ".concat(String(bardata));
+
+//document.write("here");
+states.push(bardata.slice(0));
+colors.push(SColors.slice(0));
+//document.write(String(colors));
+messages.push(M);
+
 
 function merge(v, start, size, lvl){
  
@@ -193,12 +240,20 @@ merge(bardata, 0, bardata.length, 1);
 colors.push(colors[colors.length -1].slice(0));
 states.push(states[states.length - 1]);
 messages.push("Vector is sorted!");
+
+}// draw function ends here
 //---------------------------
 var step = -1;
 
-d3.select("#next").on('click', function(){
-  step++;
+d3.select("#next").on('click', update);
+d3.select("#prev").on('click', update_back);
+
+function update(){
+
+  step++; 
   d3.selectAll('.bars')
+    //.interupt()
+    //.transition()
     .data(states[step])
     .attr('height', function(d) {
       return yScale(d);
@@ -209,12 +264,66 @@ d3.select("#next").on('click', function(){
     .style('fill', function(d,i){
       return colors[step][i];
          })
-    .append("text").text(function(d){return d3.format(".2s")})
-
-    d3.select("#message").text(messages[step])
     
-})
-d3.select("#prev").on('click', function(){
+    d3.select('svg').selectAll("text").remove()
+
+    d3.select('svg').selectAll("text")
+      .data( states[step] )
+      .enter()
+      .append("text")
+      .attr("class", "textlabel")
+      .attr("x", function(d,i){ return xScale(i) + xScale.rangeBand()/2 ; })
+      .attr("y", function(d){ return height - yScale(d) + 12; })
+      .text(function(d){ return d; })
+      .attr("fill", "black")
+      .attr("text-anchor", "middle")
+      .attr("font-size", text_height)
+
+    d3.select("#message").text(messages[step])   
+}
+
+
+function update_begin(){
+
+  step = 0; 
+  d3.selectAll('.bars')
+    //.interupt()
+    //.transition()
+    .data(states[step])
+    .attr('height', function(d) {
+      return yScale(d);
+    })
+    .attr('y', function(d){
+      return (height - yScale(d));
+    })
+    .style('fill', function(d,i){
+      return colors[step][i];
+         })
+    
+    d3.select('svg').selectAll("text").remove()
+
+    d3.select('svg').selectAll("text")
+      .data( states[step] )
+      .enter()
+      .append("text")
+      .attr("class", "textlabel")
+      .attr("x", function(d,i){ return xScale(i) + xScale.rangeBand()/2 ; })
+      .attr("y", function(d){ return height - yScale(d) + 12; })
+      .text(function(d){ return d; })
+      .attr("fill", "black")
+      .attr("text-anchor", "middle")
+      .attr("font-size", text_height)
+
+    d3.select("#message").text(messages[step]) 
+
+
+}
+
+
+
+
+function update_back(){
+
   step--;
   d3.selectAll('.bars')
     .data(states[step])
@@ -227,8 +336,24 @@ d3.select("#prev").on('click', function(){
       .style('fill', function(d,i){
       return colors[step][i];
          })
-    d3.select("#message").text(messages[step])
-    
-})
+
+
+  d3.select('svg').selectAll("text").remove()
+
+    d3.select('svg').selectAll("text")
+      .data( states[step] )
+      .enter()
+      .append("text")
+      .attr("class", "textlabel")
+      .attr("x", function(d,i){ return xScale(i) + xScale.rangeBand()/2 ; })
+      .attr("y", function(d){ return height - yScale(d) + 12; })
+      .text(function(d){ return d; })
+      .attr("fill", "black")
+      .attr("text-anchor", "middle")
+      .attr("font-size", text_height)
+
+
+    d3.select("#message").text(messages[step])   
+}
 
 

@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+ <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.js"></script>
+
+
 <title>Algorithmizer</title>
 
 <!-- Bootstrap -->
@@ -18,6 +22,7 @@
     <![endif]-->
 </head>
 <body class="bg-primary">
+
 <div class="container-fluid" id="wrapper">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -56,30 +61,47 @@
 <img src="../images/merge sort banner.jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
 
 <article id="main"><p class="intro"> a simple comparison-based algorithm that is based on sorting a vector one element at the time, and maintaining the sorted part of the vector while finding the location for next element in that sorted part </p></article>
-<div class="container"></p>
-<div class = "DataInput">
-<label  id = "Data" for="ArrayData" >Enter Your Data:</label>
+<div class="container">
 
-  <input id = "ArrayData" name="textfield" type="text" >
-  <button id="Enter"> Enter </button>
-  </div>
+
+
+<div class = "DataInput">
+
+
+<form name="myform" onSubmit="return handleClick()">
+            <input id = "Submit" name="Submit" type="submit" value="Enter Your Data:" >
+            <input type="text" id="ArrayData" placeholder="Add comma separated values&hellip;">
+</form>
+<!-- <label  id = "Data" for="ArrayData" >Enter Your Data:</label>
+
+  // <input id = "ArrayData" name="textfield" type="text" >
+  -->
+   <ul></ul>
+  </div> 
+
 <p id = "message"> </p>
   <div class = "buttons">
     <button id="prev"> Previous</button>
-  <button id="next"> Next</button>
+    <button id="next"> Next</button>
+    <button id="Enter"> Restart </button>
 </div>
      <div id="chart">  </div>
 
 </div>
 
 
+<script>
+
+
+            </script> 
+
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 <script src="../js/jquery-1.11.3.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed --> 
+<script src="../js/d3.min.js"></script>
 <script src="../js/bootstrap.js"></script>
-<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="../js/MergeSortViz.js"></script>
+<script src="../js/MergeSortViz.js"></script>
 </body>
 </html>
