@@ -88,11 +88,6 @@ h1, h3, p {
 	font-size: 160%;
 }
 
-#chart{
-	width: 80%;
-	margin:auto;
-	margin-bottom: 100px
-}
 .buttons{
 	 margin:auto;
 	 text-align:center;
@@ -108,7 +103,7 @@ h1, h3, p {
 	color: rgba(4,4,4,1.00);
 }
 #ArrayData{
-	min-width: 500px;
+	min-width: 400px;
 }
 #Submit{
      margin:auto;
@@ -128,11 +123,7 @@ input:focus {
 	padding-right: auto;
  }
 
- #bubble{
- 	margin:auto;
-	padding: 20px;
-	width: 100%;
- }
+
 #ban{
 	width: 70%;
 	margin: auto;

@@ -63,13 +63,14 @@
 
 
 
-
+<div class ="container algorithm" id="inp">
 <div class = "DataInput">
 
 
 <form name="myform" onSubmit="return handleClick()">
-            <input id = "Submit" name="Submit" type="submit" value="Enter Your Data:" >
-            <input type="text" id="ArrayData" placeholder="Add comma separated values&hellip;">
+            
+            <input type="text" id="ArrayData" placeholder="Add values, separate with 'comma SPACE'!!! &hellip;">
+            <input id = "Submit" name="Submit" type="submit" value="Enter" >
 </form>
 <!-- <label  id = "Data" for="ArrayData" >Enter Your Data:</label>
 
@@ -84,7 +85,9 @@
     <button id="next"> Next</button>
     <button id="Enter"> Restart </button>
 </div>
-     <div id="chart">  </div>
+     <div><div id="chart">  </div></div>
+     
+     </div>
 <article id="main"><p class="intro"> Merge sort a simple comparison-based algorithm that is based on sorting a vector one element at the time, and maintaining the sorted part of the vector while finding the location for next element in that sorted part 
 Conceptually, a merge sort works as follows:<br><br>
 
@@ -92,11 +95,13 @@ Divide the unsorted list into n sublists, each containing 1 element (a list of 1
 Repeatedly merge sublists to produce new sorted sublists until there is only 1 sublist remaining. This will be the sorted list.<br><br>
 The average case performance of merge sort is O(n log n)<br><br>
 The algorithm:<br><br>
-Graph will be partitioned on halves indicating what lvl or recursion it is doing<br><br>
-After last lvl where 1 element left happens, merging starts <br><br>
-Light green color indicates first element of left half <br><br>
-Dark green indicates first element of right half <br><br>
-
+Graph will be partitioned on halves indicating what lvl of recursion it is doing<br>
+After it gets into the last lvl (where 1 element is left), merging  of halves starts <br>
+Light green color indicates first element of left half <br>
+Dark green indicates first element of right half <br>
+Algorithm is provided with step by step explanation<br><br>
+<i>There is an issue possible with visualization glitching due to incorrect data input.
+Javascript reads a string from input window and it separates it into array of ints. If spaces with commas are not placed correctly, wrong data may be generated. So we strongly encourage users to separate each value with comma and one space</i><br>
 
 
 
