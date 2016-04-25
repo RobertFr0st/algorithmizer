@@ -56,9 +56,7 @@ h1, h3, p {
     padding: 0.5em;
 }
 
-input {
-    width: 3em;
-}
+
 .algorithm {
 	font-size: large;
 	color: #000000;
@@ -91,7 +89,7 @@ input {
 }
 
 #chart{
-	width: 70%;
+	width: 80%;
 	margin:auto;
 	margin-bottom: 100px
 }
@@ -112,3 +110,10 @@ input {
 #ArrayData{
 	min-width: 500px;
 }
+#Submit{
+     margin:auto;
+	 text-align:center;
+}
+input:focus {
+ background-color:#FFEFD5;
+ outline: none;}
