@@ -53,19 +53,51 @@
 <!--
 <img src="../images/quick sort banner.jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
 -->
-<h1> Quick sort</h1>
-
-<article id="main"><p class="intro"> DESCRIPTION </p></article>
-<div class ="container algorithm">
-
-    <button id="play">Play</button>
-    Speed: <input type="text" value="100" id="speed"> </input>ms
-    Length: <input type="text" value="15" id="element_count"></input>
-    <button id="reset">Reset</button>
-
-    <div id="quick"><div id="graph"></div></div>
+<div id="ban">
+<img  src="../images/quick sort banner website.jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
 </div>
 
+
+<div class ="container algorithm">
+
+ <div class="algoIn" >
+
+    <label> Speed:</label> <input type="text" value="100" id="speed"> 
+    
+    <label>Length:</label> <input type="text" value="15" id="element_count">
+    </div>
+    <div class="algoIn">
+<button id="play">Play</button>
+    <button id="reset">Reset</button>
+</div>
+    <div id="quick"><div id="graph"></div></div>
+</div>
+<article id="main"><p class="intro"> 
+Quick Sort is an in-place sorting algorithm that has an O(n log⁡n) time complexity on average. It is a commonly used sorting algorithms today, based on a “divide and conquer” method in which the array is recursively divided into smaller subsets to be sorted. <br><br>
+
+The Algorithm: The array is first partitioned using a median of three scheme: for an array of size n, we look at the values in indices 0, n-1, and n/2, (light green) and the median value gets swapped into index 0. This value at index 0 is called the pivot (dark green).<br><br>
+We then begin iterating increasingly at index 1, until we find an element whose value is greater than or equal to the pivot (we will call this index i, colored light blue), and iterate decreasingly at index n-1 until we find an element whose value is less than or equal to the pivot (we will call this index j, colored red).  <br><br>
+
+If i < j , both indices become light green to indicate that we are about to make a swap, then we swap the elements at indices i and j, and begin iterating through the array again in the described fashion.<br><br>
+
+If i > j, then we swap the element at index i-1 with the element at index 0.<br><br>
+
+Once we have the case that i>j, the pivot is now somewhere in the middle of the array, and every element to the left of the pivot will have values less than or equal to the pivot, and every element to the right of the pivot will have values greater than or equal to the pivot.<br><br>
+
+Then the algorithm recurses, and the same process is applied to the sub array of indices less than the pivot. We find a new pivot for this sub array, and the algorithm continues to break the array into smaller sub-arrays to sort, and the recursion returns when the size of the sub-array to be sorted has size 1.<br><br>
+
+Once the right side of the array is sorted, the algorithm is applied to the sub array of indices greater than the original pivot.<br><br>
+
+Color meaning:<br><br>
+Dark green = pivot element<br><br>
+Light green = three elements compared for median choice<br><br>
+Light blue = left index i<br><br>
+Red = right index j<br><br>
+Dark blue = finished (sorted)<br><br>
+
+
+
+ </p></article>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 <script src="../js/jquery-1.11.3.min.js"></script>
 

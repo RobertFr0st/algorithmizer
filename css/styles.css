@@ -117,3 +117,34 @@ h1, h3, p {
 input:focus {
  background-color:#FFEFD5;
  outline: none;}
+
+ #inp{
+	margin: auto;
+	padding-top: auto;
+	padding-left: auto;
+	padding-bottom: auto;
+	width: 60%;
+	align-content: center;
+	padding-right: auto;
+ }
+
+ #bubble{
+ 	margin:auto;
+	padding: 20px;
+	width: 100%;
+ }
+#ban{
+	width: 70%;
+	margin: auto;
+	padding: 20px;
+	margin-top: auto;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: auto;
+}
+.algoIn {
+	margin-bottom: 0px;
+	padding-top: 50px;
+	padding-bottom: 0px;
+	text-align: center;
+}

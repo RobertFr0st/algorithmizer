@@ -51,27 +51,50 @@
 </div>
     <!-- /.container-fluid -->
 
-<img src="../images/selection sort banner.jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
+<div id="ban">
+<img  src="../images/selection sort banner.jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
+</div>
 
+
+
+
+
+  <div class ="container algorithm" >
+    <div class="algoIn" >
+
+    <label> Speed:</label> <input type="text" value="100" id="speed"> 
+    
+    <label>Length:</label> <input type="text" value="15" id="element_count">
+    </div>
+    <div class="algoIn">
+<button id="play">Play</button>
+    <button id="reset">Reset</button>
+</div>
+
+    <div id="selection"><div id="graph"></div></div>
+
+  </div>
+
+  
 <article id="main">
   <p class="intro"> 
 Selection sort is a simple sorting algorithm done by comparison. The time complexity of selection sort is <i>O(n<sup>2</sup>)</i> for an array containing <i>n</i> elements. Thus, it is quite an inefficient means of sorting for large data sets. Nevertheless, it is a very intuitive algorithm, and it has certain benefits.</p>
 
-<p class="intro">Selection sort is a particularly useful when the data set is a small list of elements, and when memory is limited. It is considered an "in-place" algorithm, which means that no additional storage is needed to complete the sort. The sort is done within the array that holds the original list.
+<p class="intro">Selection sort is a particularly useful when the data set is a small list of elements, and when memory is limited. It is considered an "in-place" algorithm, which means that no additional storage is needed to complete the sort. The sort is done within the array that holds the original list.<br><br>
+
+
+The Algorithm: Similar to insertion sort, we partition the array into a sorted portion and an unsorted portion as we execute the algorithm.<br><br>
+We first compare the element at index i=0 (orange) with every element at index j>i (green). If we find an element at index j that is smaller than the element at index i (and the smallest of all indices j>i) we highlight it red. We then we swap the elements at index i=0 and j. Index 0 will then be a sorted sub array of length 1 (dark blue), with the rest of the array unsorted.<br><br>
+We continue in this pattern, swapping the element at index i=1 with the smallest element at index j>i. The algorithm again continually swaps the next smallest element into the smallest index of the unsorted portion of the array, appending it to the sorted portion of the list. <br><br>
+For an array of size n, once the sorted portion is of size n-1, the last element in the unsorted portion will clearly be in its sorted position, and we then have our entire array sorted.<br><br>
+
   </p>
+  
+  
 </article>
 
 
-  <div class ="container algorithm" >
-    <button id="play">Play</button>
 
-    Speed: <input type="text" value="50" id="speed"> </input>ms
-    Length: <input type="text" value="15" id="element_count"></input>
-
-    <button id="reset">Reset</button>
-
-    <div id="selection"><div id="graph"></div></div>
-  </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 <script src="../js/jquery-1.11.3.min.js"></script>

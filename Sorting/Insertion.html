@@ -51,8 +51,26 @@
 </div>
     <!-- /.container-fluid -->
 
-<img src="../images/insertion sort banner.jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
+<div id="ban">
+<img  src="../images/insertion sort banner.jpg" class="img-thumbnail img-responsive image-fill" alt="Placeholder image">
+</div>
 
+
+
+<div class ="container algorithm">
+    <div class="algoIn" >
+
+    <label> Speed:</label> <input type="text" value="100" id="speed"> 
+    
+    <label>Length:</label> <input type="text" value="15" id="element_count">
+    </div>
+    <div class="algoIn">
+<button id="play">Play</button>
+    <button id="reset">Reset</button>
+</div>
+
+    <div id="insertion"><div id="graph"></div></div>
+</div>
 <article id="main">
   <p class="intro">
 Insertion sort is a simple sorting algorithm in which the sorted list is constructed one element at a time. The time complexity of selection sort is <i>O(n<sup>2</sup>)</i> for an array containing <i>n</i> elements. Thus, it is quite an inefficient means of sorting for large data sets. Nevertheless, it is a fairly intuitive algorithm, and it has certain benefits.
@@ -60,20 +78,12 @@ Insertion sort is a simple sorting algorithm in which the sorted list is constru
 
   <p class = "intro">
 Insertion sort is a particularly useful when the data set is a small list of elements, and when memory is limited. Similar to Selection sort, it is considered an "in-place" algorithm, which means that no additional storage is needed to complete the sort. The sort is done within the array that holds the original list. 
-  </p>
+ 
+  The Algorithm: The array is partitioned into a sorted portion and an unsorted portion. We begin with the first element (at index i=0) a sorted sub array of length 1. Then we begin iterating through the unsorted portion array, placing each unsorted element in its correct place in the sorted portion of the array.<br><br>
+We place each next element in the unsorted array into the sorted portion by continually swapping with its left adjacent element until it’s left adjacent element has a value less than or equal to its own value.
+Once the last element in the unsorted portion is inserted into the sorted portion, we have the final sorted array.<br></p>
+
 </article>
-
-<div class ="container algorithm">
-    <button id="play">Play</button>
-
-    Speed: <input type="text" value="100" id="speed"> </input>ms
-    Length: <input type="text" value="15" id="element_count"></input>
-
-    <button id="reset">Reset</button>
-
-    <div id="insertion"><div id="graph"></div></div>
-</div>
-
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 <script src="../js/jquery-1.11.3.min.js"></script>
